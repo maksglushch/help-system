@@ -8,6 +8,12 @@ with app.app_context():
     if os.environ.get('RENDER'):
         print("Запуск міграції бази даних...")
         upgrade()
+        from app.models import User
+        user = db.session.scalar(sa.select(User).where(User.name == 'Максим Глущенко'))
+        if user:
+            user.role = 'admin'
+            db.session.commit()
+            print("Максим тепер Адмін! 🦸‍♂️")
         print("Міграція завершена!")
 
 if __name__ == '__main__':
