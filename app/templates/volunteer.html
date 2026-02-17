@@ -1,0 +1,73 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container mt-4">
+  <div class="card shadow-sm p-4">
+    <div class="row g-3 align-items-start">
+      <div class="col-md-3 text-center">
+        <img src="{{ volunteer.avatar(128) }}" class="img-fluid rounded-circle border" alt="Avatar">
+      </div>
+      <div class="col-md-9">
+        <h2 class="mb-3">Волонтер: {{ volunteer.name }}</h2>
+        <div class="mb-3">
+    <span class="fs-4 fw-bold text-warning">
+        {{ volunteer.get_rating() }} ⭐
+    </span>
+    <small class="text-muted">
+        (на основі {{ volunteer.reviews_received|length }} відгуків)
+    </small>
+</div>
+
+{% if current_user.is_authenticated and current_user.id != volunteer.id %}
+    <a href="{{ url_for('main.leave_review', volunteer_id=volunteer.id) }}" class="btn btn-outline-warning btn-sm mb-3">
+        ✍️ Написати відгук
+    </a>
+{% endif %}
+
+{% if volunteer.reviews_received %}
+    <div class="mt-4">
+        <h5>Відгуки:</h5>
+        <div class="list-group list-group-flush">
+            {% for review in volunteer.reviews_received %}
+                <div class="list-group-item bg-light border rounded mb-2">
+                    <div class="d-flex w-100 justify-content-between">
+                        <strong class="text-dark">{{ review.author.name }}</strong>
+                        <span class="text-warning">
+                            {% for i in range(review.rating) %}⭐{% endfor %}
+                        </span>
+                    </div>
+                    <p class="mb-0 small text-muted">{{ review.body }}</p>
+                    <small class="text-secondary" style="font-size: 0.7rem;">{{ moment(review.timestamp).fromNow() }}</small>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+{% endif %}
+        {% if volunteer.about_me %}
+          <p><strong>Про себе:</strong> {{ volunteer.about_me }}</p>
+        {% endif %}
+        {% if volunteer.last_seen %}
+          <p><small class="text-muted">Останній вхід: {{ moment(volunteer.last_seen).fromNow() }}</small></p>
+        {% endif %}
+
+        {% if volunteer == current_user %}
+          <div class="d-flex flex-wrap gap-2 my-3">
+            <a href="{{ url_for('main.edit_profile') }}" class="btn btn-primary btn-sm">✏️ Редагувати профіль</a>
+            <a href="{{ url_for('main.announcements') }}" class="btn btn-outline-secondary btn-sm">📋 Переглянути заявки</a>
+            <a href="{{ url_for('main.active_requests') }}" class="btn btn-success btn-sm">✅ Активні заявки</a>
+          </div>
+
+          <h4 class="mt-4">Історія виконаних заявок:</h4>
+          <ul class="list-group list-group-flush">
+            {% for ann in volunteer.taken_announcements if ann.status == 'completed' %}
+              <li class="list-group-item"><b>{{ ann.title }}</b> — {{ ann.text }}</li>
+            {% else %}
+              <li class="list-group-item text-muted">Немає виконаних заявок.</li>
+            {% endfor %}
+          </ul>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

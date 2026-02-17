@@ -1,0 +1,60 @@
+
+2025-11-26 23:56:57,350 | {"event": "system_start", "timestamp": "2025-11-26 23:56:57", "meta": {"status": "Application Initialized"}}
+2025-11-26 23:57:23,461 | {"event": "user_registered", "timestamp": "2025-11-26 23:57:23", "meta": {"role": "needy", "email": "maksglstdw555@gmail.com"}}
+2025-11-26 23:57:30,749 | {"event": "user_login", "timestamp": "2025-11-26 23:57:30", "meta": {"user_name": "Макс", "role": "needy"}}
+2025-11-26 23:57:54,163 | {"event": "announcement_created", "timestamp": "2025-11-26 23:57:54", "meta": {"author": "Макс", "title": "Допоможіть!"}}
+2025-11-26 23:57:56,365 | {"event": "user_logout", "timestamp": "2025-11-26 23:57:56", "meta": {"user_name": "Макс"}}
+2025-11-26 23:59:19,033 | {"event": "user_registered", "timestamp": "2025-11-26 23:59:19", "meta": {"role": "volunteer", "email": "drnlusiry@gmail.com"}}
+2025-11-26 23:59:26,806 | {"event": "user_login", "timestamp": "2025-11-26 23:59:26", "meta": {"user_name": "Жора", "role": "volunteer"}}
+2025-11-26 23:59:30,028 | {"event": "request_accepted", "timestamp": "2025-11-26 23:59:30", "meta": {"volunteer": "Жора", "request_id": 2}}
+2025-11-26 23:59:34,464 | {"event": "request_completed", "timestamp": "2025-11-26 23:59:34", "meta": {"volunteer": "Жора", "request_id": 2}}
+2025-11-26 23:59:36,731 | {"event": "user_logout", "timestamp": "2025-11-26 23:59:36", "meta": {"user_name": "Жора"}}
+2026-02-10 22:39:44,240 | {"event": "system_start", "timestamp": "2026-02-10 22:39:44", "meta": {"status": "Application Initialized"}}
+2026-02-10 22:39:54,077 | {"event": "system_start", "timestamp": "2026-02-10 22:39:54", "meta": {"status": "Application Initialized"}}
+2026-02-10 22:40:00,935 | {"event": "system_start", "timestamp": "2026-02-10 22:40:00", "meta": {"status": "Application Initialized"}}
+2026-02-10 22:40:06,769 | {"event": "system_start", "timestamp": "2026-02-10 22:40:06", "meta": {"status": "Application Initialized"}}
+2026-02-10 22:44:23,898 | {"event": "system_start", "timestamp": "2026-02-10 22:44:23", "meta": {"status": "Application Initialized"}}
+2026-02-10 22:44:52,318 | {"event": "user_registered", "timestamp": "2026-02-10 22:44:52", "meta": {"role": "volunteer", "email": "dreamnail22rail@gmail.com"}}
+2026-02-10 22:45:03,156 | {"event": "user_login", "timestamp": "2026-02-10 22:45:03", "meta": {"user_name": "Макс Глущ", "role": "volunteer"}}
+2026-02-10 23:04:38,034 | {"event": "system_start", "timestamp": "2026-02-10 23:04:38", "meta": {"status": "Application Initialized"}}
+2026-02-10 23:04:52,314 | {"event": "system_start", "timestamp": "2026-02-10 23:04:52", "meta": {"status": "Application Initialized"}}
+2026-02-10 23:07:31,617 | {"event": "system_start", "timestamp": "2026-02-10 23:07:31", "meta": {"status": "Application Initialized"}}
+2026-02-10 23:08:15,458 | {"event": "user_registered", "timestamp": "2026-02-10 23:08:15", "meta": {"role": "needy", "email": "vvvfcfgvctgv@gmail.com"}}
+2026-02-10 23:08:38,718 | {"event": "user_login", "timestamp": "2026-02-10 23:08:38", "meta": {"user_name": "test332", "role": "needy"}}
+2026-02-10 23:13:17,754 | {"event": "system_start", "timestamp": "2026-02-10 23:13:17", "meta": {"status": "Application Initialized"}}
+2026-02-10 23:15:54,390 | {"event": "system_start", "timestamp": "2026-02-10 23:15:54", "meta": {"status": "Application Initialized"}}
+2026-02-10 23:18:14,480 | {"event": "system_start", "timestamp": "2026-02-10 23:18:14", "meta": {"status": "Application Initialized"}}
+2026-02-10 23:18:24,005 | {"event": "announcement_created", "timestamp": "2026-02-10 23:18:24", "meta": {"author": "test332", "title": "потрибни лики"}}
+2026-02-10 23:18:47,149 | {"event": "user_login", "timestamp": "2026-02-10 23:18:47", "meta": {"user_name": "Макс Глущ", "role": "volunteer"}}
+2026-02-10 23:24:50,455 | {"event": "system_start", "timestamp": "2026-02-10 23:24:50", "meta": {"status": "Application Initialized"}}
+2026-02-10 23:24:56,656 | {"event": "system_start", "timestamp": "2026-02-10 23:24:56", "meta": {"status": "Application Initialized"}}
+2026-02-10 23:27:49,805 | {"event": "system_start", "timestamp": "2026-02-10 23:27:49", "meta": {"status": "Application Initialized"}}
+2026-02-10 23:30:33,427 | {"event": "system_start", "timestamp": "2026-02-10 23:30:33", "meta": {"status": "Application Initialized"}}
+2026-02-10 23:30:54,290 | {"event": "user_login", "timestamp": "2026-02-10 23:30:54", "meta": {"user_name": "test332", "role": "needy"}}
+2026-02-10 23:33:54,652 | {"event": "system_start", "timestamp": "2026-02-10 23:33:54", "meta": {"status": "Application Initialized"}}
+2026-02-10 23:34:20,594 | {"event": "announcement_created", "timestamp": "2026-02-10 23:34:20", "meta": {"author": "test332", "title": "лики 2.0"}}
+2026-02-10 23:34:39,711 | {"event": "user_login", "timestamp": "2026-02-10 23:34:39", "meta": {"user_name": "Макс Глущ", "role": "volunteer"}}
+2026-02-10 23:37:12,751 | {"event": "system_start", "timestamp": "2026-02-10 23:37:12", "meta": {"status": "Application Initialized"}}
+2026-02-11 01:16:44,412 | {"event": "system_start", "timestamp": "2026-02-11 01:16:44", "meta": {"status": "Application Initialized"}}
+2026-02-11 01:16:50,221 | {"event": "system_start", "timestamp": "2026-02-11 01:16:50", "meta": {"status": "Application Initialized"}}
+2026-02-11 01:20:40,447 | {"event": "system_start", "timestamp": "2026-02-11 01:20:40", "meta": {"status": "Application Initialized"}}
+2026-02-11 01:21:06,782 | {"event": "user_login", "timestamp": "2026-02-11 01:21:06", "meta": {"user_name": "test332", "role": "needy"}}
+2026-02-11 01:21:26,332 | {"event": "system_start", "timestamp": "2026-02-11 01:21:26", "meta": {"status": "Application Initialized"}}
+2026-02-11 01:21:40,286 | {"event": "review_left", "timestamp": "2026-02-11 01:21:40", "meta": {"author": "test332", "recipient": "Макс Глущ", "rating": "5"}}
+2026-02-11 21:55:07,189 | {"event": "system_start", "timestamp": "2026-02-11 21:55:07", "meta": {"status": "Application Initialized"}}
+2026-02-11 21:55:13,900 | {"event": "system_start", "timestamp": "2026-02-11 21:55:13", "meta": {"status": "Application Initialized"}}
+2026-02-11 22:03:25,659 | {"event": "system_start", "timestamp": "2026-02-11 22:03:25", "meta": {"status": "Application Initialized"}}
+2026-02-11 22:05:03,977 | {"event": "user_login", "timestamp": "2026-02-11 22:05:03", "meta": {"user_name": "Макс Глущ", "role": "volunteer"}}
+2026-02-11 22:21:00,910 | {"event": "user_login", "timestamp": "2026-02-11 22:21:00", "meta": {"user_name": "test332", "role": "needy"}}
+2026-02-12 00:29:06,282 | {"event": "system_start", "timestamp": "2026-02-12 00:29:06", "meta": {"status": "Application Initialized"}}
+2026-02-12 00:30:25,911 | {"event": "system_start", "timestamp": "2026-02-12 00:30:25", "meta": {"status": "Application Initialized"}}
+2026-02-12 00:31:07,986 | {"event": "user_login", "timestamp": "2026-02-12 00:31:07", "meta": {"user_name": "Admin", "role": "admin"}}
+2026-02-12 00:37:15,286 | {"event": "system_start", "timestamp": "2026-02-12 00:37:15", "meta": {"status": "Application Initialized"}}
+2026-02-12 00:41:42,359 | {"event": "system_start", "timestamp": "2026-02-12 00:41:42", "meta": {"status": "Application Initialized"}}
+2026-02-12 00:47:22,752 | {"event": "system_start", "timestamp": "2026-02-12 00:47:22", "meta": {"status": "Application Initialized"}}
+2026-02-12 00:51:08,363 | {"event": "system_start", "timestamp": "2026-02-12 00:51:08", "meta": {"status": "Application Initialized"}}
+2026-02-12 00:55:29,050 | {"event": "system_start", "timestamp": "2026-02-12 00:55:29", "meta": {"status": "Application Initialized"}}
+2026-02-12 00:55:38,489 | {"event": "system_start", "timestamp": "2026-02-12 00:55:38", "meta": {"status": "Application Initialized"}}
+2026-02-12 00:59:01,252 | {"event": "system_start", "timestamp": "2026-02-12 00:59:01", "meta": {"status": "Application Initialized"}}
+2026-02-12 01:01:54,340 | {"event": "system_start", "timestamp": "2026-02-12 01:01:54", "meta": {"status": "Application Initialized"}}
+2026-02-12 01:03:29,469 | {"event": "system_start", "timestamp": "2026-02-12 01:03:29", "meta": {"status": "Application Initialized"}}

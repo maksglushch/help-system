@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-8 text-center">
+            <h1 class="fw-bold mb-4">Про проект <span class="text-primary">Help System</span></h1>
+            <p class="lead text-muted mb-5">
+                Це дипломний проект, створений з метою полегшити комунікацію між волонтерами та людьми, які потребують допомоги.
+            </p>
+        </div>
+    </div>
+
+    <div class="row g-4 mb-5">
+        <div class="col-md-6">
+            <div class="card h-100 border-0 shadow-sm p-4">
+                <div class="d-flex align-items-center mb-3">
+                    <div class="icon-square bg-light text-primary flex-shrink-0 me-3 rounded-circle p-3">
+                        <i class="fa-solid fa-bullseye fa-2x"></i>
+                    </div>
+                    <h3 class="fw-bold mb-0">Наша Мета</h3>
+                </div>
+                <p>Ми прагнемо створити безпечний та зручний простір, де кожен може отримати підтримку або стати героєм для когось поруч. Жодних складних бюрократичних процедур — лише пряма допомога.</p>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="card h-100 border-0 shadow-sm p-4">
+                <div class="d-flex align-items-center mb-3">
+                    <div class="icon-square bg-light text-success flex-shrink-0 me-3 rounded-circle p-3">
+                        <i class="fa-solid fa-code fa-2x"></i>
+                    </div>
+                    <h3 class="fw-bold mb-0">Технології</h3>
+                </div>
+                <p>Проект розроблено на Python (Flask) з використанням сучасних веб-технологій: SQLAlchemy, Leaflet Maps, Real-time Chat та адаптивного дизайну Bootstrap 5.</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="text-center mt-5">
+        <h3 class="mb-4">Готові допомогти?</h3>
+        <a href="{{ url_for('main.index') }}" class="btn btn-primary btn-lg rounded-pill px-5">
+            Повернутися на головну
+        </a>
+    </div>
+</div>
+{% endblock %}

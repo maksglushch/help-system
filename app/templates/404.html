@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container text-center mt-5">
+  <h1 class="display-4 text-danger fw-bold">404</h1>
+  <p class="lead mb-4">Ой! Такої сторінки не існує 😔</p>
+  <p>Можливо, вона була переміщена або ніколи не існувала.</p>
+  <a href="{{ url_for('main.index') }}" class="btn btn-primary mt-3">🏠 На головну</a>
+</div>
+{% endblock %}

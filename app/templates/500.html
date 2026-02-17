@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container text-center mt-5">
+  <h1 class="display-4 text-warning fw-bold">500</h1>
+  <p class="lead mb-4">Виникла несподівана помилка 😬</p>
+  <p>Ми вже працюємо над її виправленням.<br>Вибачте за тимчасові незручності!</p>
+  <a href="{{ url_for('main.index') }}" class="btn btn-primary mt-3">🏠 Повернутись на головну</a>
+</div>
+{% endblock %}

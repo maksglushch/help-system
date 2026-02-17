@@ -1,0 +1,82 @@
+{% extends "base.html" %}
+
+{% block content %}
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+
+<div class="container mt-4">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card shadow">
+                <div class="card-header bg-primary text-white">
+                    <h3 class="mb-0">Створити заявку</h3>
+                </div>
+                <div class="card-body">
+                    <form method="POST">
+                        {{ form.csrf_token }}
+                        
+                        <div class="mb-3">
+                            {{ form.title.label(class="form-label fw-bold") }}
+                            {{ form.title(class="form-control") }}
+                        </div>
+
+                        <div class="mb-3">
+                            {{ form.text.label(class="form-label fw-bold") }}
+                            {{ form.text(class="form-control", rows=4) }}
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label fw-bold">Вкажіть місце (Клікніть по карті) 👇</label>
+                            <div id="map" style="height: 400px; width: 100%; border-radius: 5px; border: 2px solid #ddd;"></div>
+                        </div>
+
+                        <div class="alert alert-secondary">
+                            <small>Технічні координати (мають заповнитись самі):</small><br>
+                            {{ form.lat(id="lat_field", type="hidden") }}
+                            {{ form.lng(id="lng_field", type="hidden") }}
+                        </div>
+
+                        <div class="d-grid mt-4">
+                            {{ form.submit(class="btn btn-success btn-lg") }}
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    // Инициализация карты
+    var map = L.map('map').setView([50.4501, 30.5234], 13);
+
+    L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        maxZoom: 19,
+        attribution: '© OpenStreetMap'
+    }).addTo(map);
+
+    var marker;
+
+    function onMapClick(e) {
+        if (marker) {
+            map.removeLayer(marker);
+        }
+        marker = L.marker(e.latlng).addTo(map);
+
+        // 🔥 МАГИЯ ТУТ: Записываем цифры в поля
+        // Мы используем value, потому что поля теперь отрендерены Flask-ом
+        var latInput = document.getElementById('lat_field');
+        var lngInput = document.getElementById('lng_field');
+        
+        if (latInput && lngInput) {
+            latInput.value = e.latlng.lat;
+            lngInput.value = e.latlng.lng;
+            console.log("Координати записані:", e.latlng.lat, e.latlng.lng);
+        } else {
+            alert("ПОМИЛКА: Не знайдено поля форми для координат!");
+        }
+    }
+
+    map.on('click', onMapClick);
+</script>
+{% endblock %}

@@ -1,0 +1,76 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container mt-4">
+  <div class="card shadow-sm p-4">
+    <div class="row g-3 align-items-start">
+      <div class="col-md-3 text-center">
+        <img src="{{ needy.avatar(128) }}" class="img-fluid rounded-circle border" alt="Avatar">
+      </div>
+      <div class="col-md-9">
+        <h2 class="mb-3">Користувач: {{ needy.name }}</h2>
+
+        {% if needy.contact_info %}
+          <p><strong>Контактна інформація:</strong> {{ needy.contact_info }}</p>
+        {% endif %}
+        {% if needy.about_me %}
+          <p><strong>Про себе:</strong> {{ needy.about_me }}</p>
+        {% endif %}
+
+        <p class="text-muted">Ви увійшли як користувач, який потребує допомоги.</p>
+
+        {% if needy == current_user %}
+          <div class="d-flex flex-wrap gap-2 my-3">
+            <a href="{{ url_for('main.edit_profile') }}" class="btn btn-primary btn-sm">✏️ Редагувати профіль</a>
+            <a href="{{ url_for('main.create_announcement') }}" class="btn btn-success btn-sm">📢 Створити заявку</a>
+          </div>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+
+  <hr class="my-4">
+
+  <div class="card shadow-sm p-4">
+    <h4>Ваші заявки на допомогу</h4>
+    {% if announcements %}
+      <div class="list-group list-group-flush mt-2">
+        {% for ann in announcements %}
+          <div class="list-group-item">
+            <div class="d-flex w-100 justify-content-between">
+              <h5 class="mb-1">{{ ann.title }}</h5>
+              <small class="text-muted">{{ moment(ann.timestamp).format('LLL') }}</small>
+            </div>
+            <p class="mb-1">{{ ann.text }}</p>
+            
+            <div class="mt-2">
+                <span class="badge 
+                    {% if ann.status == 'open' %}bg-success
+                    {% elif ann.status == 'accepted' %}bg-warning text-dark
+                    {% elif ann.status == 'completed' %}bg-secondary
+                    {% endif %}">
+                    Статус: 
+                    {% if ann.status == 'open' %}Відкрито (пошук волонтера)
+                    {% elif ann.status == 'accepted' %}В роботі (взяв {{ ann.volunteer.name }})
+                    {% elif ann.status == 'completed' %}Виконано
+                    {% endif %}
+                </span>
+            </div>
+
+            {% if ann.status == 'accepted' %}
+                <div class="mt-3">
+                    <a href="{{ url_for('main.chat', announcement_id=ann.id) }}" class="btn btn-primary btn-sm">
+                        💬 Відкрити чат з волонтером
+                    </a>
+                </div>
+            {% endif %}
+
+          </div>
+        {% endfor %}
+      </div>
+    {% else %}
+      <p class="text-muted">Поки що заявок немає.</p>
+    {% endif %}
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,97 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="row align-items-center py-5 min-vh-75">
+    
+    <div class="col-lg-6 mb-5 mb-lg-0 pe-lg-5">
+        <h1 class="display-3 fw-bolder mb-3" style="line-height: 1.1;">
+            Роби добро <br> 
+            <span style="background: linear-gradient(120deg, #667eea 0%, #764ba2 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">
+                вже сьогодні
+            </span>
+        </h1>
+        <p class="lead text-muted mb-4" style="font-size: 1.2rem; line-height: 1.6;">
+            Платформа, що поєднує тих, хто потребує допомоги, з тими, хто готовий її надати. Швидко, безпечно та поруч з вами.
+        </p>
+        
+        <div class="d-flex gap-3 flex-column flex-sm-row">
+            <a href="{{ url_for('auth.login', user_type='volunteer') }}" class="btn btn-primary btn-lg px-4 shadow-lg hover-up">
+                🦸‍♂️ Я Волонтер
+            </a>
+            <a href="{{ url_for('auth.login', user_type='needy') }}" class="btn btn-outline-dark btn-lg px-4 hover-up">
+                🙏 Потрібна допомога
+            </a>
+        </div>
+
+        <div class="mt-5 pt-3 border-top d-flex align-items-center gap-4 text-muted small">
+            <div><i class="fa-solid fa-users text-primary me-2"></i><b>500+</b> Людей</div>
+            <div><i class="fa-solid fa-check-circle text-success me-2"></i><b>1200+</b> Справ</div>
+        </div>
+    </div>
+
+    <div class="col-lg-6 text-center position-relative">
+        <div style="position: absolute; top: -20px; right: -20px; width: 100px; height: 100px; background: #764ba2; opacity: 0.1; border-radius: 50%; z-index: -1;"></div>
+        <div style="position: absolute; bottom: -30px; left: 20px; width: 150px; height: 150px; background: #667eea; opacity: 0.1; border-radius: 50%; z-index: -1;"></div>
+
+        <img src="{{ url_for('static', filename='img/hero.jpg') }}" 
+             class="img-fluid rounded-4 shadow-lg animation-float" 
+             alt="Volunteers"
+             style="object-fit: cover; max-height: 500px; width: 100%; border: 5px solid white;">
+
+        <script>
+            document.querySelector('img').onerror = function() {
+                console.log("Локальна картинка не знайдена, вантажу з інтернету...");
+                this.src = 'https://images.unsplash.com/photo-1559027615-cd4628902d4a?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80';
+            };
+        </script>
+    </div>
+</div>
+
+<style>
+    .animation-float { animation: float 6s ease-in-out infinite; }
+    @keyframes float {
+        0% { transform: translateY(0px); }
+        50% { transform: translateY(-10px); }
+        100% { transform: translateY(0px); }
+    }
+    .hover-up { transition: transform 0.2s; }
+    .hover-up:hover { transform: translateY(-3px); }
+</style>
+
+<div class="row mt-5 mb-5 pb-5 text-center">
+    <div class="col-md-4 mb-4">
+        <div class="card h-100 p-4 border-0 shadow-sm">
+            <div class="text-primary mb-3"><i class="fa-solid fa-map-location-dot fa-3x"></i></div>
+            <h4 class="fw-bold">Поруч з вами</h4>
+            <p class="text-muted">Інтерактивна мапа допоможе знайти заявки у вашому районі.</p>
+        </div>
+    </div>
+    <div class="col-md-4 mb-4">
+        <div class="card h-100 p-4 border-0 shadow-sm">
+            <div class="text-primary mb-3"><i class="fa-solid fa-comments fa-3x"></i></div>
+            <h4 class="fw-bold">Зручний чат</h4>
+            <p class="text-muted">Спілкуйтеся безпосередньо на сайті без передачі особистих номерів.</p>
+        </div>
+    </div>
+    <div class="col-md-4 mb-4">
+        <div class="card h-100 p-4 border-0 shadow-sm">
+            <div class="text-primary mb-3"><i class="fa-solid fa-star fa-3x"></i></div>
+            <h4 class="fw-bold">Рейтинг довіри</h4>
+            <p class="text-muted">Система відгуків гарантує чесність та безпеку кожного учасника.</p>
+        </div>
+    </div>
+</div>
+
+<div class="row justify-content-center text-center my-5 py-5 bg-white rounded-5 shadow-sm mx-1">
+    <div class="col-lg-8">
+        <h2 class="fw-bold mb-3">Разом ми сильніші 💪</h2>
+        <p class="lead text-muted mb-4">
+            Кожен внесок має значення. Маленький добрий вчинок сьогодні може змінити чиєсь життя завтра. 
+            Приєднуйся до нашої спільноти добра вже зараз.
+        </p>
+        <a href="{{ url_for('main.about') }}" class="btn btn-outline-primary rounded-pill px-5 py-2">
+            Дізнатись більше про нас
+        </a>
+    </div>
+</div>
+{% endblock %}
