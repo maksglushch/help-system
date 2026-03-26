@@ -1,46 +1,73 @@
 {% extends "base.html" %}
 
 {% block content %}
-<div class="container py-5">
-    <div class="row justify-content-center">
-        <div class="col-lg-8 text-center">
-            <h1 class="fw-bold mb-4">Про проект <span class="text-primary">Help System</span></h1>
-            <p class="lead text-muted mb-5">
-                Це дипломний проект, створений з метою полегшити комунікацію між волонтерами та людьми, які потребують допомоги.
-            </p>
-        </div>
+<div class="row align-items-center py-5">
+    <div class="col-lg-6 mb-4 mb-lg-0 pe-lg-5">
+        <h1 class="display-4 fw-bolder mb-4" style="line-height: 1.2;">
+            Хто ми та <br><span class="text-primary">чому це важливо</span>
+        </h1>
+        <p class="lead text-muted mb-4" style="font-size: 1.2rem;">
+            Help System — це не просто дипломний проект. Це спроба показати, як технології можуть об'єднувати людей у найважливіші моменти життя.
+        </p>
+        <p class="text-muted">
+            Волонтерство — це фундамент сильного суспільства. Наша платформа створена для того, щоб прибрати будь-які бар'єри між тими, хто потребує термінової допомоги, та тими, хто має гаряче серце та готовність діяти. Жодних складних бюрократичних процедур — лише пряма взаємодія.
+        </p>
     </div>
+    <div class="col-lg-6 position-relative">
+        <div style="position: absolute; top: -20px; right: -20px; width: 100px; height: 100px; background: #667eea; opacity: 0.1; border-radius: 50%; z-index: -1;"></div>
+        <img src="https://images.unsplash.com/photo-1593113588332-cd288d649433?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80" alt="Команда волонтерів" class="img-fluid rounded-4 shadow-lg" style="object-fit: cover; height: 400px; width: 100%; border: 5px solid white;">
+    </div>
+</div>
 
-    <div class="row g-4 mb-5">
-        <div class="col-md-6">
-            <div class="card h-100 border-0 shadow-sm p-4">
-                <div class="d-flex align-items-center mb-3">
-                    <div class="icon-square bg-light text-primary flex-shrink-0 me-3 rounded-circle p-3">
-                        <i class="fa-solid fa-bullseye fa-2x"></i>
-                    </div>
-                    <h3 class="fw-bold mb-0">Наша Мета</h3>
-                </div>
-                <p>Ми прагнемо створити безпечний та зручний простір, де кожен може отримати підтримку або стати героєм для когось поруч. Жодних складних бюрократичних процедур — лише пряма допомога.</p>
-            </div>
-        </div>
-        <div class="col-md-6">
-            <div class="card h-100 border-0 shadow-sm p-4">
-                <div class="d-flex align-items-center mb-3">
-                    <div class="icon-square bg-light text-success flex-shrink-0 me-3 rounded-circle p-3">
-                        <i class="fa-solid fa-code fa-2x"></i>
-                    </div>
-                    <h3 class="fw-bold mb-0">Технології</h3>
-                </div>
-                <p>Проект розроблено на Python (Flask) з використанням сучасних веб-технологій: SQLAlchemy, Leaflet Maps, Real-time Chat та адаптивного дизайну Bootstrap 5.</p>
-            </div>
+<div class="row g-4 my-5 py-4">
+    <div class="col-md-4">
+        <div class="card static-card h-100 border-0 shadow-sm p-4 text-center">
+            <div class="text-primary mb-3"><i class="fa-solid fa-heart fa-3x"></i></div>
+            <h4 class="fw-bold">Справжня допомога</h4>
+            <p class="text-muted">Ви бачите запит, ви можете допомогти — ви це робите. Все максимально прозоро, швидко та орієнтовано на результат.</p>
         </div>
     </div>
+    <div class="col-md-4">
+        <div class="card static-card h-100 border-0 shadow-sm p-4 text-center">
+            <div class="text-success mb-3"><i class="fa-solid fa-code fa-3x"></i></div>
+            <h4 class="fw-bold">Сучасні технології</h4>
+            <p class="text-muted">Проект побудовано на потужному стеку Python (Flask), SQLAlchemy, інтеграції з мапами Leaflet та адаптивному Bootstrap 5.</p>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card static-card h-100 border-0 shadow-sm p-4 text-center">
+            <div class="text-warning mb-3"><i class="fa-solid fa-shield-halved fa-3x"></i></div>
+            <h4 class="fw-bold">Безпека та довіра</h4>
+            <p class="text-muted">Внутрішній чат без розголошення особистих номерів телефонів та система відгуків гарантують безпеку обом сторонам.</p>
+        </div>
+    </div>
+</div>
 
-    <div class="text-center mt-5">
-        <h3 class="mb-4">Готові допомогти?</h3>
-        <a href="{{ url_for('main.index') }}" class="btn btn-primary btn-lg rounded-pill px-5">
-            Повернутися на головну
-        </a>
+<div class="row align-items-center py-5 flex-column-reverse flex-lg-row">
+    <div class="col-lg-6 mt-5 mt-lg-0">
+        <img src="https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80" alt="Допомога дітям" class="img-fluid rounded-4 shadow-lg" style="object-fit: cover; height: 400px; width: 100%; border: 5px solid white;">
     </div>
+    <div class="col-lg-6 ps-lg-5">
+        <h2 class="fw-bold mb-4">Волонтерство змінює світ 🌍</h2>
+        <p class="text-muted mb-3">
+            Сьогодні, як ніколи, важливо триматися разом. Навіть найменша допомога — принести ліки літній людині, допомогти з переїздом, вигуляти собаку або просто підтримати словом — створює величезну хвилю добра.
+        </p>
+        <p class="text-muted mb-4">
+            Наша система розроблена так, щоб ви могли знаходити актуальні запити про допомогу прямо у вашому районі. Витративши всього годину свого часу, ви можете вирішити проблему, яка здавалася людині нездоланною. 
+        </p>
+        <div class="d-flex gap-3">
+            <a href="{{ url_for('auth.login', user_type='volunteer') }}" class="btn btn-primary rounded-pill px-4 hover-up">
+                <i class="fa-solid fa-hands-holding-child me-2"></i> Стати волонтером
+            </a>
+        </div>
+    </div>
+</div>
+
+<div class="text-center mt-5 mb-4 py-5 rounded-5 shadow-sm mx-1" style="background: linear-gradient(135deg, rgba(102, 126, 234, 0.05) 0%, rgba(118, 75, 162, 0.05) 100%);">
+    <h3 class="mb-3 fw-bold">Готові зробити свій внесок?</h3>
+    <p class="text-muted mb-4">Повертайтеся на головну сторінку та обирайте свою роль у системі.</p>
+    <a href="{{ url_for('main.index') }}" class="btn btn-outline-primary btn-lg rounded-pill px-5 hover-up bg-white">
+        <i class="fa-solid fa-arrow-left me-2"></i> Повернутися на головну
+    </a>
 </div>
 {% endblock %}
