@@ -1,110 +1,161 @@
-HTML
 {% extends "base.html" %}
 
 {% block content %}
 <style>
-    /* Ультимативний захист від плавання тексту */
-    .btn-no-jitter {
-        transition: transform 0.3s cubic-bezier(0.25, 0.8, 0.25, 1), box-shadow 0.3s ease;
-        will-change: transform; /* Каже браузеру: "Тримай це на відеокарті завжди!" */
-        backface-visibility: hidden;
-        transform: translateZ(0);
-        -webkit-font-smoothing: subpixel-antialiased;
+    /* АБСОЛЮТНО НЕПРОБИВНА КНОПКА (Без фізичного зсуву) */
+    .btn-solid-hover {
+        transition: box-shadow 0.3s ease, filter 0.3s ease;
+        transform: translateZ(0); /* Фіксація на відеокарті */
+        -webkit-font-smoothing: antialiased;
     }
-    .btn-no-jitter:hover {
-        transform: translateY(-4px) translateZ(0);
-        box-shadow: 0 15px 25px rgba(0,0,0,0.1);
+    .btn-solid-hover:hover {
+        box-shadow: 0 10px 25px rgba(102, 126, 234, 0.4) !important;
+        filter: brightness(1.1); /* Легке освітлення замість стрибка */
     }
-    .about-image {
+    
+    .about-hero-img {
         object-fit: cover; 
-        border: 5px solid white;
+        border: 8px solid white;
+        height: 450px; 
+        width: 100%;
+    }
+    .stat-number {
+        font-size: 3rem;
+        font-weight: 800;
+        background: var(--primary-gradient);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+    }
+    .text-justify {
+        text-align: justify;
     }
 </style>
 
 <div class="row align-items-center py-5">
     <div class="col-lg-6 mb-4 mb-lg-0 pe-lg-5">
         <div class="badge bg-primary text-white rounded-pill px-3 py-2 mb-3 shadow-sm">
-            <i class="fa-solid fa-hands-holding-circle me-1"></i> Соціальний проект
+            <i class="fa-solid fa-earth-europe me-1"></i> Соціальне дослідження
         </div>
         <h1 class="display-4 fw-bolder mb-4" style="line-height: 1.2;">
-            Надійний тил: <br><span class="text-primary">сила звичайних людей</span>
+            Більше ніж код. <br><span class="text-primary">Філософія взаємодопомоги</span>
         </h1>
-        <p class="lead text-muted mb-4" style="font-size: 1.2rem;">
-            Help System — це дипломний проект, який народився з реалій нашого сьогодення. Це платформа для тих, хто не звик стояти осторонь, коли поруч комусь потрібна допомога.
+        <p class="lead text-muted mb-4">
+            Help System — це не просто дипломний проект. Це спроба оцифрувати людяність та створити інструмент, який робить допомогу доступною, швидкою та безпечною.
         </p>
     </div>
     <div class="col-lg-6 position-relative">
-        <div style="position: absolute; top: -20px; right: -20px; width: 100px; height: 100px; background: #667eea; opacity: 0.1; border-radius: 50%; z-index: -1;"></div>
-        <img src="https://images.unsplash.com/photo-1593113630400-ea4288922497?q=80&w=1000&auto=format&fit=crop" 
+        <div style="position: absolute; top: -20px; right: -20px; width: 120px; height: 120px; background: #667eea; opacity: 0.1; border-radius: 50%; z-index: -1;"></div>
+        <img src="https://images.unsplash.com/photo-1593113588332-cd288d649433?q=80&w=1000&auto=format&fit=crop" 
              onerror="this.src='https://images.unsplash.com/photo-1582213782179-e0d53f98f2ca?q=80&w=1000&auto=format&fit=crop';"
-             alt="Громада разом" 
-             class="img-fluid rounded-4 shadow-lg about-image" style="height: 400px; width: 100%;">
+             alt="Команда волонтерів" 
+             class="img-fluid rounded-4 shadow-lg about-hero-img">
     </div>
 </div>
 
-<div class="row justify-content-center text-center mt-5 mb-4">
-    <div class="col-lg-8">
-        <h2 class="fw-bold mb-4">Чому цивільне волонтерство зараз — це фундамент</h2>
-        <p class="text-muted" style="font-size: 1.1rem; line-height: 1.7;">
-            У складні часи для нашої країни саме солідарність громадян стала тим клеєм, що тримає суспільство докупи. 
-            Ми не збираємо кошти на мілітарні потреби — для цього існують великі та перевірені фонди. 
-            <strong>Наш фронт — це людяність у повсякденному житті.</strong>
+<div class="row text-center my-5 py-5 bg-white rounded-5 shadow-sm mx-1">
+    <div class="col-md-3 col-6 mb-4 mb-md-0">
+        <div class="stat-number">1 млрд+</div>
+        <div class="text-muted fw-bold text-uppercase small mt-2">Волонтерів у світі</div>
+    </div>
+    <div class="col-md-3 col-6 mb-4 mb-md-0">
+        <div class="stat-number">80%</div>
+        <div class="text-muted fw-bold text-uppercase small mt-2">Українців долучені до допомоги</div>
+    </div>
+    <div class="col-md-3 col-6">
+        <div class="stat-number">24/7</div>
+        <div class="text-muted fw-bold text-uppercase small mt-2">Доступність платформи</div>
+    </div>
+    <div class="col-md-3 col-6">
+        <div class="stat-number">1 Мета</div>
+        <div class="text-muted fw-bold text-uppercase small mt-2">Робити світ кращим</div>
+    </div>
+</div>
+
+<div class="row mb-5 pb-4">
+    <div class="col-lg-12 text-center mb-5">
+        <h2 class="fw-bold">Волонтерство: від світового тренду до життєвої необхідності</h2>
+    </div>
+    <div class="col-md-6 mb-4 pe-md-4">
+        <h4 class="fw-bold mb-3"><i class="fa-solid fa-globe text-primary me-2"></i> Світовий досвід</h4>
+        <p class="text-muted text-justify">
+            У розвинених країнах волонтерство є невід'ємною частиною культури. За даними ООН, понад мільярд людей щороку присвячують свій час допомозі іншим. Це не лише вирішує гострі соціальні проблеми, але й формує громадянське суспільство. Дослідження показують, що люди, які регулярно займаються волонтерством, мають нижчий рівень стресу, рідше страждають на депресію та відчувають більшу задоволеність життям.
+        </p>
+    </div>
+    <div class="col-md-6 mb-4 ps-md-4 border-md-start">
+        <h4 class="fw-bold mb-3"><i class="fa-solid fa-brain text-success me-2"></i> Психологія добра</h4>
+        <p class="text-muted text-justify">
+            З точки зору психології, допомога іншим активує в мозку ті ж самі центри задоволення, що й отримання нагороди. Це так званий феномен "helper's high" (ейфорія помічника). Створюючи цю платформу, ми хотіли дати людям простий і зрозумілий інструмент, який дозволить кожному відчути себе корисним, перетворивши вільний час на реальні добрі справи.
         </p>
     </div>
 </div>
 
-<div class="row g-4 mb-5 pb-4">
-    <div class="col-md-4">
-        <div class="card static-card h-100 border-0 shadow-sm p-4">
-            <div class="text-primary mb-3"><i class="fa-solid fa-house-chimney-user fa-3x"></i></div>
-            <h5 class="fw-bold">Допомога ВПО</h5>
-            <p class="text-muted small">Тисячі людей були змушені покинути свої домівки. Поділитися речами першої потреби, допомогти з перевезенням меблів чи просто зорієнтувати в новому місті — це неоціненна підтримка.</p>
-        </div>
-    </div>
-    <div class="col-md-4">
-        <div class="card static-card h-100 border-0 shadow-sm p-4">
-            <div class="text-success mb-3"><i class="fa-solid fa-person-cane fa-3x"></i></div>
-            <h5 class="fw-bold">Турбота про літніх</h5>
-            <p class="text-muted small">Сходити в аптеку за ліками, принести продукти з магазину або допомогти з дрібним ремонтом для самотніх пенсіонерів, яким важко впоратися самотужки.</p>
-        </div>
-    </div>
-    <div class="col-md-4">
-        <div class="card static-card h-100 border-0 shadow-sm p-4">
-            <div class="text-warning mb-3"><i class="fa-solid fa-paw fa-3x"></i></div>
-            <h5 class="fw-bold">Брати наші менші</h5>
-            <p class="text-muted small">Притулки часто переповнені і потребують як фізичної допомоги (вигул собак, прибирання), так і корму чи медикаментів для покинутих тварин.</p>
+<div class="row justify-content-center text-center mt-5 mb-5 bg-light py-5 rounded-5 mx-1">
+    <div class="col-lg-8">
+        <span class="badge bg-warning text-dark mb-3 px-3 py-2 rounded-pill shadow-sm border border-warning">Український контекст</span>
+        <h2 class="fw-bold mb-4">Феномен цивільного тилу в Україні</h2>
+        <p class="text-muted mb-5 text-center">
+            Сьогодні українське волонтерство стало безпрецедентним явищем у світовій історії. І поки великі фонди закривають глобальні та мілітарні потреби, <strong>наш фокус — це цивільний тил</strong>. Це ті щоденні, непомітні подвиги, які допомагають громадам виживати та залишатися людяними.
+        </p>
+        
+        <div class="row g-4 text-start">
+            <div class="col-md-4">
+                <div class="card static-card h-100 border-0 shadow-sm p-4">
+                    <div class="text-primary mb-3"><i class="fa-solid fa-house-chimney-user fa-2x"></i></div>
+                    <h5 class="fw-bold">Підтримка ВПО</h5>
+                    <p class="text-muted small">Тисячі родин починають життя з нуля. Зібрати речі першої потреби, поділитися посудом, допомогти з ремонтом чи просто показати місто — це базова інтеграція, яку забезпечують звичайні сусіди.</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card static-card h-100 border-0 shadow-sm p-4">
+                    <div class="text-success mb-3"><i class="fa-solid fa-person-cane fa-2x"></i></div>
+                    <h5 class="fw-bold">Турбота про літніх</h5>
+                    <p class="text-muted small">Через міграцію багато літніх людей залишилися без підтримки рідних. Принести продукти, купити ліки, налаштувати смартфон чи просто вислухати — це рятує від соціальної ізоляції.</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card static-card h-100 border-0 shadow-sm p-4">
+                    <div class="text-warning mb-3"><i class="fa-solid fa-paw fa-2x"></i></div>
+                    <h5 class="fw-bold">Порятунок тварин</h5>
+                    <p class="text-muted small">Притулки працюють на межі можливостей. Платформа дозволяє координувати вигул собак, тимчасову перетримку, доставку корму та лікування покинутих улюбленців.</p>
+                </div>
+            </div>
         </div>
     </div>
 </div>
 
-<div class="row align-items-center py-5 flex-column-reverse flex-lg-row bg-white rounded-5 shadow-sm mx-1 px-3">
+<div class="row align-items-center py-5 flex-column-reverse flex-lg-row">
     <div class="col-lg-6 mt-5 mt-lg-0">
         <img src="https://images.unsplash.com/photo-1531206715517-5c0ba140fea2?q=80&w=1000&auto=format&fit=crop" 
              onerror="this.src='https://images.unsplash.com/photo-1469571486292-0ba58a3f068b?q=80&w=1000&auto=format&fit=crop';"
-             alt="Підтримка" 
-             class="img-fluid rounded-4 shadow-sm about-image" style="height: 350px; width: 100%;">
+             alt="Технології" 
+             class="img-fluid rounded-4 shadow-sm about-hero-img" style="height: 350px;">
     </div>
     <div class="col-lg-6 ps-lg-5">
-        <h3 class="fw-bold mb-4">Технології на службі добра 🛠️</h3>
-        <p class="text-muted mb-3">
-            Щоб допомога була швидкою, система використовує сучасний стек технологій. Завдяки інтеграції з мапами <strong>Leaflet</strong>, ви бачите актуальні заявки виключно у вашому радіусі.
+        <h2 class="fw-bold mb-4">Технології на службі суспільства 💻</h2>
+        <p class="text-muted mb-3 text-justify">
+            Класичний пошук допомоги через соцмережі має багато недоліків: пости губляться у стрічці, складно знайти заявку поруч із домом, а публікація особистих даних (телефону, адреси) створює ризики шахрайства.
         </p>
-        <p class="text-muted mb-4">
-            Внутрішній чат гарантує приватність — вам не потрібно публікувати свій особистий номер телефону. А система рейтингів допомагає формувати спільноту, засновану на взаємній повазі та довірі.
+        <p class="text-muted mb-4 text-justify">
+            <strong>Рішення Help System:</strong> Ми створили закриту екосистему. Завдяки інтеграції з гео-мапами <strong>Leaflet</strong>, ви бачите лише актуальні заявки у вашому районі. Вбудований чат дозволяє координувати дії без обміну номерами, а система ролей (Волонтер / Потребуючий) чітко розмежовує функціонал. Проект побудовано на надійному бекенді <strong>Python (Flask)</strong> із використанням баз даних PostgreSQL.
         </p>
         
-        <a href="{{ url_for('auth.login', user_type='volunteer') }}" class="btn btn-primary rounded-pill px-4 py-3 btn-no-jitter d-inline-block">
-            <i class="fa-solid fa-hands-holding-child me-2"></i> Приєднатися до ініціативи
+        <a href="{{ url_for('auth.login', user_type='volunteer') }}" class="btn btn-primary rounded-pill px-4 py-3 btn-solid-hover d-inline-block">
+            <i class="fa-solid fa-bolt me-2"></i> Стати частиною системи
         </a>
     </div>
 </div>
 
-<div class="text-center mt-5 mb-4 py-5 rounded-5 mx-1" style="background: linear-gradient(135deg, rgba(102, 126, 234, 0.05) 0%, rgba(118, 75, 162, 0.05) 100%); border: 1px dashed rgba(102, 126, 234, 0.3);">
-    <h3 class="mb-3 fw-bold">Маленької допомоги не буває</h3>
-    <p class="text-muted mb-4">Витративши всього годину свого часу, ви можете вирішити проблему, яка здавалася людині нездоланною.</p>
+<div class="text-center mt-5 mb-4 py-5 rounded-5 mx-1 position-relative overflow-hidden" style="background: var(--primary-gradient);">
+    <div style="position: absolute; top: -50px; left: -50px; width: 200px; height: 200px; background: rgba(255,255,255,0.1); border-radius: 50%;"></div>
+    <div style="position: absolute; bottom: -50px; right: -50px; width: 150px; height: 150px; background: rgba(255,255,255,0.1); border-radius: 50%;"></div>
     
-    <a href="{{ url_for('main.index') }}" class="btn btn-outline-primary rounded-pill px-5 py-2 btn-no-jitter bg-white d-inline-block">
-        <i class="fa-solid fa-arrow-left me-2"></i> Повернутися на головну
-    </a>
+    <div class="position-relative z-index-1">
+        <h3 class="mb-3 fw-bold text-white">Маленької допомоги не буває</h3>
+        <p class="text-white-50 mb-4" style="font-size: 1.1rem;">Ваша година вільного часу може змінити чийсь день на краще.</p>
+        
+        <a href="{{ url_for('main.index') }}" class="btn btn-light text-primary rounded-pill px-5 py-3 btn-solid-hover fw-bold d-inline-block">
+            <i class="fa-solid fa-arrow-left me-2"></i> Повернутися на головну
+        </a>
+    </div>
 </div>
 {% endblock %}
