@@ -2,15 +2,24 @@
 
 {% block content %}
 <style>
-    /* АБСОЛЮТНО НЕПРОБИВНА КНОПКА (Без фізичного зсуву) */
-    .btn-solid-hover {
-        transition: box-shadow 0.3s ease, filter 0.3s ease;
-        transform: translateZ(0); /* Фіксація на відеокарті */
-        -webkit-font-smoothing: antialiased;
+    /* ЯДЕРНА ЗБРОЯ ПРОТИ БРАУЗЕРНОГО РЕНДЕРИНГУ */
+    .btn-solid-hover, .btn-solid-hover:hover, .btn-solid-hover:focus {
+        transform: none !important; /* Жодного фізичного руху */
+        filter: none !important; /* Жодних ефектів відеокарти */
+        will-change: auto !important; /* Вимикаємо апаратне прискорення */
+        transition: background-color 0.2s ease, box-shadow 0.2s ease !important;
     }
-    .btn-solid-hover:hover {
-        box-shadow: 0 10px 25px rgba(102, 126, 234, 0.4) !important;
-        filter: brightness(1.1); /* Легке освітлення замість стрибка */
+    
+    /* Змінюємо тільки колір та тінь */
+    .btn-primary.btn-solid-hover:hover {
+        box-shadow: 0 8px 20px rgba(102, 126, 234, 0.4) !important;
+        background-color: #556cd6 !important; /* Робимо фон трохи темнішим */
+    }
+
+    /* Для білої кнопки внизу */
+    .btn-light.btn-solid-hover:hover {
+        background-color: #f0f2f5 !important;
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1) !important;
     }
     
     .about-hero-img {
