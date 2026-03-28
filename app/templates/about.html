@@ -2,21 +2,20 @@
 
 {% block content %}
 <style>
-    /* ЯДЕРНА ЗБРОЯ ПРОТИ БРАУЗЕРНОГО РЕНДЕРИНГУ */
-    .btn-solid-hover, .btn-solid-hover:hover, .btn-solid-hover:focus {
-        transform: none !important; /* Жодного фізичного руху */
-        filter: none !important; /* Жодних ефектів відеокарти */
-        will-change: auto !important; /* Вимикаємо апаратне прискорення */
+    /* Жорстка фіксація кнопки */
+    .btn-solid-hover {
         transition: background-color 0.2s ease, box-shadow 0.2s ease !important;
+        transform: none !important;
+        filter: none !important;
+        border: 2px solid transparent !important; /* Унеможливлює мікро-зсуви через рамку */
+        margin: 0 !important;
     }
     
-    /* Змінюємо тільки колір та тінь */
     .btn-primary.btn-solid-hover:hover {
         box-shadow: 0 8px 20px rgba(102, 126, 234, 0.4) !important;
-        background-color: #556cd6 !important; /* Робимо фон трохи темнішим */
+        background-color: #556cd6 !important; 
     }
 
-    /* Для білої кнопки внизу */
     .btn-light.btn-solid-hover:hover {
         background-color: #f0f2f5 !important;
         box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1) !important;
@@ -145,12 +144,14 @@
             Класичний пошук допомоги через соцмережі має багато недоліків: пости губляться у стрічці, складно знайти заявку поруч із домом, а публікація особистих даних (телефону, адреси) створює ризики шахрайства.
         </p>
         <p class="text-muted mb-4 text-justify">
-            <strong>Рішення Help System:</strong> Ми створили закриту екосистему. Завдяки інтеграції з гео-мапами <strong>Leaflet</strong>, ви бачите лише актуальні заявки у вашому районі. Вбудований чат дозволяє координувати дії без обміну номерами, а система ролей (Волонтер / Потребуючий) чітко розмежовує функціонал. Проект побудовано на надійному бекенді <strong>Python (Flask)</strong> із використанням баз даних PostgreSQL.
+            <strong>Рішення Help System:</strong> Ми створили закриту екосистему. Завдяки інтеграції з гео-мапами <strong>Leaflet</strong>, ви бачите лише актуальні заявки у вашому районі. Вбудований чат дозволяє координувати дії без обміну номерами, а система ролей чітко розмежовує функціонал.
         </p>
         
-        <a href="{{ url_for('auth.login', user_type='volunteer') }}" class="btn btn-primary rounded-pill px-4 py-3 btn-solid-hover d-inline-block">
-            <i class="fa-solid fa-bolt me-2"></i> Стати частиною системи
-        </a>
+        <div class="d-inline-block" style="min-height: 65px;">
+            <a href="{{ url_for('auth.login', user_type='volunteer') }}" class="btn btn-primary rounded-pill px-4 py-3 btn-solid-hover">
+                <i class="fa-solid fa-bolt me-2"></i> Стати частиною системи
+            </a>
+        </div>
     </div>
 </div>
 
@@ -162,9 +163,11 @@
         <h3 class="mb-3 fw-bold text-white">Маленької допомоги не буває</h3>
         <p class="text-white-50 mb-4" style="font-size: 1.1rem;">Ваша година вільного часу може змінити чийсь день на краще.</p>
         
-        <a href="{{ url_for('main.index') }}" class="btn btn-light text-primary rounded-pill px-5 py-3 btn-solid-hover fw-bold d-inline-block">
-            <i class="fa-solid fa-arrow-left me-2"></i> Повернутися на головну
-        </a>
+        <div class="d-inline-block" style="min-height: 65px;">
+            <a href="{{ url_for('main.index') }}" class="btn btn-light text-primary rounded-pill px-5 py-3 btn-solid-hover fw-bold">
+                <i class="fa-solid fa-arrow-left me-2"></i> Повернутися на головну
+            </a>
+        </div>
     </div>
 </div>
 {% endblock %}
