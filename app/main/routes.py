@@ -158,10 +158,27 @@ def active_requests():
 def complete_request(announcement_id):
     ann = db.session.get(Announcement, announcement_id)
     if ann and ann.volunteer_id == current_user.id:
-        ann.status = 'completed'
+        ann.status = 'waiting_review' # 🔥 НОВИЙ СТАТУС
         db.session.commit()
-        flash('Заявку позначено як виконану! Дякуємо.')
+        flash('Використано! Очікуємо підтвердження та оцінку від автора заявки.')
     return redirect(url_for('main.active_requests'))
+
+@bp.route('/api/check_waiting_review')
+@login_required
+def check_waiting_review():
+    if current_user.role != 'needy':
+        return jsonify({'found': False})
+    
+    # Шукаємо заявку, яку щойно виконав волонтер
+    ann = db.session.scalar(
+        sa.select(Announcement).where(
+            Announcement.needy_id == current_user.id,
+            Announcement.status == 'waiting_review'
+        ).limit(1)
+    )
+    if ann:
+        return jsonify({'found': True, 'ann_id': ann.id})
+    return jsonify({'found': False})
 
 # ---------------------------------------------------------
 # СКАСУВАТИ ЗАЯВКУ

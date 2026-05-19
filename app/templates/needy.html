@@ -55,11 +55,13 @@
                 <span class="badge 
                     {% if ann.status == 'open' %}bg-success
                     {% elif ann.status == 'accepted' %}bg-warning text-dark
+                    {% elif ann.status == 'waiting_review' %}bg-info text-dark
                     {% elif ann.status == 'completed' %}bg-secondary
                     {% endif %}">
                     Статус: 
                     {% if ann.status == 'open' %}Відкрито (пошук волонтера)
                     {% elif ann.status == 'accepted' %}В роботі (взяв {{ ann.volunteer.name }})
+                    {% elif ann.status == 'waiting_review' %}⏳ Очікує вашої оцінки
                     {% elif ann.status == 'completed' %}Виконано
                     {% endif %}
                 </span>
@@ -72,9 +74,9 @@
                     </a>
                 {% endif %}
                 
-                {% if ann.status in ['open', 'accepted'] %}
+                {% if ann.status in ['open', 'accepted', 'waiting_review'] %}
                     <button type="button" class="btn btn-success btn-sm" data-bs-toggle="modal" data-bs-target="#completeModal{{ ann.id }}">
-                        ✅ Завершити заявку
+                        {% if ann.status == 'waiting_review' %}🌟 Оцінити роботу{% else %}✅ Завершити заявку{% endif %}
                     </button>
                 {% endif %}
             </div>
@@ -117,7 +119,6 @@
                 </div>
               </div>
             </div>
-            ```
 
           </div>
         {% endfor %}
@@ -127,4 +128,24 @@
     {% endif %}
   </div>
 </div>
+<script>
+  setInterval(function() {
+      fetch('/api/check_waiting_review')
+          .then(response => response.json())
+          .then(data => {
+              if (data.found) {
+                  let modalId = 'completeModal' + data.ann_id;
+                  let modalElement = document.getElementById(modalId);
+                  // Якщо модалка існує і ще не відкрита на екрані
+                  if (modalElement && !modalElement.classList.contains('show')) {
+                      let myModal = new bootstrap.Modal(modalElement, {
+                          backdrop: 'static', // Забороняє закрити кліком мимо
+                          keyboard: false     // Забороняє закрити через Esc
+                      });
+                      myModal.show(); // Автоматично викидає вікно!
+                  }
+              }
+          });
+  }, 3000); // Перевіряє кожні 3 секунди
+</script>
 {% endblock %}
