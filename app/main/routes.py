@@ -43,7 +43,9 @@ def user_profile(name):
         announcements = db.session.scalars(
             sa.select(Announcement).where(Announcement.author == user).order_by(Announcement.timestamp.desc())
         ).all()
-        return render_template('needy.html', needy=user, announcements=announcements)
+        # 🔥 ДОДАЛИ ФОРМУ СЮДИ:
+        review_form = ReviewForm() 
+        return render_template('needy.html', needy=user, announcements=announcements, review_form=review_form)
     
     return render_template('404.html')
 
@@ -281,26 +283,33 @@ def reset_db_secret():
     db.create_all()
     return "<h1>База даних успішно оновлена!</h1><p>Тепер повернись на головну сторінку.</p>"
 
-@bp.route('/needy_complete_request/<int:announcement_id>')
+@bp.route('/needy_complete_request/<int:announcement_id>', methods=['POST'])
 @login_required
 def needy_complete_request(announcement_id):
     ann = db.session.get(Announcement, announcement_id)
     
-    # Перевіряємо, чи існує заявка і чи належить вона поточному юзеру
     if not ann or ann.needy_id != current_user.id:
-        flash('Це не ваша заявка, ви не можете її закрити.')
+        flash('Це не ваша заявка.')
         return redirect(url_for('main.user_profile', name=current_user.name))
-    
-    # Змінюємо статус
+
     ann.status = 'completed'
-    volunteer_id = ann.volunteer_id
-    db.session.commit()
     
-    # Якщо над заявкою працював волонтер, просимо залишити відгук
-    if volunteer_id:
-        flash('Заявку успішно закрито! Будь ласка, оцініть роботу волонтера.')
-        return redirect(url_for('main.leave_review', volunteer_id=volunteer_id))
+    # Якщо був волонтер, зберігаємо відгук з модалки
+    if ann.volunteer_id:
+        form = ReviewForm()
+        if form.validate_on_submit():
+            review_text = form.body.data if form.body.data else "Користувач не залишив тексту, лише оцінку."
+            review = Review(
+                body=review_text,
+                rating=int(form.rating.data),
+                author=current_user,
+                recipient=ann.volunteer
+            )
+            db.session.add(review)
+            flash(f'Заявку успішно виконано! Ви оцінили волонтера на {form.rating.data} зірок.')
     else:
-        # Якщо волонтера ще не було (просто скасував/закрив пусту)
-        flash('Заявку закрито/скасовано.')
-        return redirect(url_for('main.user_profile', name=current_user.name))
+        # Якщо волонтера не було
+        flash('Заявку успішно закрито.')
+        
+    db.session.commit()
+    return redirect(url_for('main.user_profile', name=current_user.name))

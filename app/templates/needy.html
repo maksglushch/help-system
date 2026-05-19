@@ -73,11 +73,51 @@
                 {% endif %}
                 
                 {% if ann.status in ['open', 'accepted'] %}
-                    <a href="{{ url_for('main.needy_complete_request', announcement_id=ann.id) }}" class="btn btn-success btn-sm">
+                    <button type="button" class="btn btn-success btn-sm" data-bs-toggle="modal" data-bs-target="#completeModal{{ ann.id }}">
                         ✅ Завершити заявку
-                    </a>
+                    </button>
                 {% endif %}
             </div>
+
+            <div class="modal fade" id="completeModal{{ ann.id }}" tabindex="-1" aria-hidden="true">
+              <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                  <div class="modal-header bg-success text-white">
+                    <h5 class="modal-title">Завершення: {{ ann.title }}</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                  </div>
+                  
+                  <form action="{{ url_for('main.needy_complete_request', announcement_id=ann.id) }}" method="post">
+                    {{ review_form.hidden_tag() }}
+                    <div class="modal-body text-center">
+                      
+                      {% if ann.volunteer_id %}
+                        <p>Волонтер <strong>{{ ann.volunteer.name }}</strong> працював над цією заявкою.</p>
+                        <p class="text-muted small">Оцініть його роботу:</p>
+                        
+                        <div class="mb-3">
+                          {{ review_form.rating.label(class="form-label fw-bold") }}
+                          {{ review_form.rating(class="form-select text-center") }}
+                        </div>
+                        
+                        <div class="mb-3 text-start">
+                          {{ review_form.body.label(class="form-label fw-bold") }}
+                          {{ review_form.body(class="form-control", rows="2", placeholder="Все було супер! Дякую...") }}
+                        </div>
+                      {% else %}
+                        <p>Ця заявка ще не має волонтера. Бажаєте просто скасувати/закрити її?</p>
+                      {% endif %}
+
+                    </div>
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Скасувати</button>
+                      <button type="submit" class="btn btn-success">✅ Підтвердити</button>
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+            ```
 
           </div>
         {% endfor %}

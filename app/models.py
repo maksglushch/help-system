@@ -7,6 +7,9 @@ from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import UserMixin
 from hashlib import md5
 from flask import url_for 
+import os
+from flask import current_app, url_for
+
 
 # ЗАГРУЗКА ПОЛЬЗОВАТЕЛЯ (Flask-Login)
 @login.user_loader
@@ -62,9 +65,12 @@ class User(UserMixin, db.Model):
 
     def avatar(self, size):
         if self.avatar_file:
-            # Якщо користувач завантажив свою картинку
-            return url_for('static', filename='avatars/' + self.avatar_file)
-        # Інакше використовуємо стандартний граватар
+            # Перевіряємо, чи файл фізично існує (Render міг його стерти)
+            file_path = os.path.join(current_app.root_path, 'static', 'avatars', self.avatar_file)
+            if os.path.exists(file_path):
+                return url_for('static', filename='avatars/' + self.avatar_file)
+        
+        # Якщо файлу немає, повертаємо стандартний граватар
         digest = md5(self.email.lower().encode('utf-8')).hexdigest()
         return f'https://www.gravatar.com/avatar/{digest}?d=identicon&s={size}'
     
