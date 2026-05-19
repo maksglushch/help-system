@@ -279,4 +279,4 @@ def reset_db_secret():
     from app import db
     db.drop_all()
     db.create_all()
-    return "<h1>База даних успішно оновлена!</h1><p>Тепер повернись на головну сторінку.</p>"
+    return "<h1>База даних успішно оновлена!</h1><p>Тепер повернись на головну сторінку.</p>"git add .
