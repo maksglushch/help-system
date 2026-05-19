@@ -65,13 +65,19 @@
                 </span>
             </div>
 
-            {% if ann.status == 'accepted' %}
-                <div class="mt-3">
+            <div class="mt-3 d-flex flex-wrap gap-2">
+                {% if ann.status == 'accepted' %}
                     <a href="{{ url_for('main.chat', announcement_id=ann.id) }}" class="btn btn-primary btn-sm">
-                        💬 Відкрити чат з волонтером
+                        💬 Відкрити чат
                     </a>
-                </div>
-            {% endif %}
+                {% endif %}
+                
+                {% if ann.status in ['open', 'accepted'] %}
+                    <a href="{{ url_for('main.needy_complete_request', announcement_id=ann.id) }}" class="btn btn-success btn-sm">
+                        ✅ Завершити заявку
+                    </a>
+                {% endif %}
+            </div>
 
           </div>
         {% endfor %}
