@@ -10,14 +10,22 @@
       <div class="col-md-9">
         <h2 class="mb-3">Користувач: {{ needy.name }}</h2>
 
-        {% if needy.contact_info %}
-          <p><strong>Контактна інформація:</strong> {{ needy.contact_info }}</p>
+        <p class="mb-1"><strong>Email:</strong> <a href="mailto:{{ needy.email }}">{{ needy.email }}</a></p>
+        {% if needy.phone %}
+          <p class="mb-1"><strong>Телефон:</strong> <a href="tel:{{ needy.phone }}">{{ needy.phone }}</a></p>
         {% endif %}
+        {% if needy.city %}
+          <p class="mb-1"><strong>Місто:</strong> {{ needy.city }}</p>
+        {% endif %}
+        {% if needy.contact_info %}
+          <p class="mb-1"><strong>Дод. контакти:</strong> {{ needy.contact_info }}</p>
+        {% endif %}
+        
         {% if needy.about_me %}
-          <p><strong>Про себе:</strong> {{ needy.about_me }}</p>
+          <p class="mt-2"><strong>Про себе:</strong> {{ needy.about_me }}</p>
         {% endif %}
 
-        <p class="text-muted">Ви увійшли як користувач, який потребує допомоги.</p>
+        <p class="text-muted mt-3">Ви увійшли як користувач, який потребує допомоги.</p>
 
         {% if needy == current_user %}
           <div class="d-flex flex-wrap gap-2 my-3">

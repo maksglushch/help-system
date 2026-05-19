@@ -1,11 +1,70 @@
 {% extends "base.html" %}
 
 {% block content %}
-    <h1>Редагування профілю</h1>
-    <form action="" method="post">
-        {{ form.hidden_tag() }}
-        <p>{{ form.name.label }}<br>{{ form.name(size=32) }}</p>
-        <p>{{ form.about_me.label }}<br>{{ form.about_me(cols=50, rows=4) }}</p>
-        <p>{{ form.submit() }}</p>
-    </form>
+<div class="container mt-4">
+  <div class="row justify-content-center">
+    <div class="col-md-8">
+      <div class="card shadow-sm">
+        <div class="card-header bg-primary text-white">
+          <h4 class="mb-0">Редагування профілю</h4>
+        </div>
+        <div class="card-body p-4">
+          
+          <div class="text-center mb-4">
+            <img src="{{ current_user.avatar(128) }}" class="rounded-circle border mb-3" style="width: 128px; height: 128px; object-fit: cover;">
+          </div>
+
+          <form action="" method="post" enctype="multipart/form-data">
+            {{ form.hidden_tag() }}
+            
+            <div class="row">
+              <div class="col-md-6 mb-3">
+                {{ form.name.label(class="form-label fw-bold") }}
+                {{ form.name(class="form-control") }}
+                {% for error in form.name.errors %}<span class="text-danger small">[{{ error }}]</span>{% endfor %}
+              </div>
+              <div class="col-md-6 mb-3">
+                {{ form.email.label(class="form-label fw-bold") }}
+                {{ form.email(class="form-control") }}
+                {% for error in form.email.errors %}<span class="text-danger small">[{{ error }}]</span>{% endfor %}
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-md-6 mb-3">
+                {{ form.phone.label(class="form-label fw-bold") }}
+                {{ form.phone(class="form-control", placeholder="+380...") }}
+              </div>
+              <div class="col-md-6 mb-3">
+                {{ form.city.label(class="form-label fw-bold") }}
+                {{ form.city(class="form-control", placeholder="Київ") }}
+              </div>
+            </div>
+
+            <div class="mb-3">
+              {{ form.contact_info.label(class="form-label fw-bold") }}
+              {{ form.contact_info(class="form-control", placeholder="Telegram: @username") }}
+            </div>
+
+            <div class="mb-3">
+              {{ form.about_me.label(class="form-label fw-bold") }}
+              {{ form.about_me(class="form-control", rows="3") }}
+            </div>
+
+            <div class="mb-4">
+              {{ form.avatar.label(class="form-label fw-bold") }}
+              {{ form.avatar(class="form-control") }}
+              {% for error in form.avatar.errors %}<span class="text-danger small">[{{ error }}]</span>{% endfor %}
+            </div>
+
+            <div class="d-grid gap-2">
+              {{ form.submit(class="btn btn-success btn-lg") }}
+            </div>
+          </form>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
 {% endblock %}

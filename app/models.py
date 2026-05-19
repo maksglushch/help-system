@@ -6,6 +6,7 @@ from app import db, login
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import UserMixin
 from hashlib import md5
+from flask import url_for 
 
 # ЗАГРУЗКА ПОЛЬЗОВАТЕЛЯ (Flask-Login)
 @login.user_loader
@@ -23,12 +24,12 @@ class User(UserMixin, db.Model):
     email: so.Mapped[str] = so.mapped_column(sa.String(120), index=True, unique=True)
     password_hash: so.Mapped[str] = so.mapped_column(sa.String(256))
     
-    # Дополнительные поля (телефон, о себе)
+    # 🔥 ОНОВЛЕНІ ДОДАТКОВІ ПОЛЯ
     phone: so.Mapped[Optional[str]] = so.mapped_column(sa.String(20), nullable=True)
-    
-    # 🔥 ОСЬ ВОНИ, ДОДАНІ ПОЛЯ:
+    city: so.Mapped[Optional[str]] = so.mapped_column(sa.String(64), nullable=True) # Нове поле
     about_me: so.Mapped[Optional[str]] = so.mapped_column(sa.String(140), nullable=True)
     contact_info: so.Mapped[Optional[str]] = so.mapped_column(sa.String(140), nullable=True)
+    avatar_file: so.Mapped[Optional[str]] = so.mapped_column(sa.String(120), nullable=True) # Нове поле
     
     last_seen: so.Mapped[Optional[datetime]] = so.mapped_column(default=lambda: datetime.now(timezone.utc))
 
@@ -60,6 +61,10 @@ class User(UserMixin, db.Model):
         return check_password_hash(self.password_hash, password)
 
     def avatar(self, size):
+        if self.avatar_file:
+            # Якщо користувач завантажив свою картинку
+            return url_for('static', filename='avatars/' + self.avatar_file)
+        # Інакше використовуємо стандартний граватар
         digest = md5(self.email.lower().encode('utf-8')).hexdigest()
         return f'https://www.gravatar.com/avatar/{digest}?d=identicon&s={size}'
     

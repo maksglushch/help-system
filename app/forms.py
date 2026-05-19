@@ -1,4 +1,5 @@
 from flask_wtf import FlaskForm
+from flask_wtf.file import FileField, FileAllowed # 🔥 ДОДАНО ДЛЯ ФАЙЛІВ
 from wtforms import StringField, PasswordField, BooleanField, SubmitField, TextAreaField, FloatField, SelectField, HiddenField
 from wtforms.validators import ValidationError, DataRequired, Email, EqualTo, Length
 import sqlalchemy as sa
@@ -30,20 +31,30 @@ class RegistrationForm(FlaskForm):
 
 class EditProfileForm(FlaskForm):
     name = StringField("Ім'я користувача", validators=[DataRequired()])
-    # ДОДАЛИ ЦІ ДВА ПОЛЯ 👇
+    email = StringField('Email', validators=[DataRequired(), Email()])
+    phone = StringField('Телефон', validators=[Length(min=0, max=20)])
+    city = StringField('Місто', validators=[Length(min=0, max=64)])
     about_me = TextAreaField('Про себе', validators=[Length(min=0, max=140)])
-    contact_info = StringField('Контактна інформація (Телефон/Telegram)', validators=[Length(min=0, max=140)])
-    submit = SubmitField('Зберегти')
+    contact_info = StringField('Інші контакти (Telegram тощо)', validators=[Length(min=0, max=140)])
+    avatar = FileField('Оновити фото профілю', validators=[FileAllowed(['jpg', 'png', 'jpeg'], 'Тільки зображення!')])
+    submit = SubmitField('Зберегти зміни')
 
-    def __init__(self, original_name, *args, **kwargs):
+    def __init__(self, original_name, original_email, *args, **kwargs):
         super(EditProfileForm, self).__init__(*args, **kwargs)
         self.original_name = original_name
+        self.original_email = original_email
 
     def validate_name(self, name):
         if name.data != self.original_name:
             user = db.session.scalar(sa.select(User).where(User.name == name.data))
             if user is not None:
                 raise ValidationError("Це ім'я вже зайняте.")
+                
+    def validate_email(self, email):
+        if email.data != self.original_email:
+            user = db.session.scalar(sa.select(User).where(User.email == email.data))
+            if user is not None:
+                raise ValidationError("Цей email вже використовується.")
 
 class AnnouncementForm(FlaskForm):
     title = StringField('Заголовок', validators=[DataRequired(), Length(min=1, max=100)])

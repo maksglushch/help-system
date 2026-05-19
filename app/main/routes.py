@@ -1,11 +1,14 @@
 from datetime import datetime
 import sqlalchemy as sa
-from flask import render_template, flash, redirect, url_for, request, jsonify
+from flask import current_app, render_template, flash, redirect, url_for, request, jsonify
 from flask_login import login_required, current_user
 from app import db
 from app.main import bp
 from app.forms import EditProfileForm, AnnouncementForm, ReviewForm, MessageForm
 from app.models import User, Announcement, Review, Message
+import os
+import secrets
+
 
 # ---------------------------------------------------------
 # ГОЛОВНА СТОРІНКА
@@ -45,24 +48,31 @@ def user_profile(name):
     return render_template('404.html')
 
 # ---------------------------------------------------------
-# РЕДАГУВАННЯ ПРОФІЛЮ (ВИПРАВЛЕНО!)
+# РЕДАГУВАННЯ ПРОФІЛЮ (ОНОВЛЕНО!)
 # ---------------------------------------------------------
 @bp.route('/edit_profile', methods=['GET', 'POST'])
 @login_required
 def edit_profile():
-    # Передаємо поточне ім'я для валідації
-    form = EditProfileForm(current_user.name)
+    form = EditProfileForm(current_user.name, current_user.email)
     if form.validate_on_submit():
-        # БУЛО: form.username.data -> СТАЛО: form.name.data
+        if form.avatar.data:
+            picture_file = save_avatar(form.avatar.data)
+            current_user.avatar_file = picture_file
+            
         current_user.name = form.name.data
+        current_user.email = form.email.data
+        current_user.phone = form.phone.data
+        current_user.city = form.city.data
         current_user.about_me = form.about_me.data
         current_user.contact_info = form.contact_info.data
         db.session.commit()
-        flash('Зміни збережено.')
+        flash('Зміни успішно збережено!', 'success')
         return redirect(url_for('main.user_profile', name=current_user.name))
     elif request.method == 'GET':
-        # БУЛО: form.username.data -> СТАЛО: form.name.data
         form.name.data = current_user.name
+        form.email.data = current_user.email
+        form.phone.data = current_user.phone
+        form.city.data = current_user.city
         form.about_me.data = current_user.about_me
         form.contact_info.data = current_user.contact_info
     return render_template('edit_profile.html', title='Редагувати профіль', form=form)
@@ -252,3 +262,15 @@ def get_messages(announcement_id):
             'time': msg.timestamp.strftime('%H:%M')
         })
     return jsonify(data)
+
+def save_avatar(form_picture):
+    random_hex = secrets.token_hex(8)
+    _, f_ext = os.path.splitext(form_picture.filename)
+    picture_fn = random_hex + f_ext
+    picture_path = os.path.join(current_app.root_path, 'static', 'avatars', picture_fn)
+    
+    # Створюємо папку, якщо її ще немає
+    os.makedirs(os.path.dirname(picture_path), exist_ok=True)
+    form_picture.save(picture_path)
+    return picture_fn
+

@@ -4,50 +4,66 @@
 <div class="container mt-4">
   <div class="card shadow-sm p-4">
     <div class="row g-3 align-items-start">
+      
       <div class="col-md-3 text-center">
         <img src="{{ volunteer.avatar(128) }}" class="img-fluid rounded-circle border" alt="Avatar">
       </div>
+      
       <div class="col-md-9">
         <h2 class="mb-3">Волонтер: {{ volunteer.name }}</h2>
+        
         <div class="mb-3">
-    <span class="fs-4 fw-bold text-warning">
-        {{ volunteer.get_rating() }} ⭐
-    </span>
-    <small class="text-muted">
-        (на основі {{ volunteer.reviews_received|length }} відгуків)
-    </small>
-</div>
-
-{% if current_user.is_authenticated and current_user.id != volunteer.id %}
-    <a href="{{ url_for('main.leave_review', volunteer_id=volunteer.id) }}" class="btn btn-outline-warning btn-sm mb-3">
-        ✍️ Написати відгук
-    </a>
-{% endif %}
-
-{% if volunteer.reviews_received %}
-    <div class="mt-4">
-        <h5>Відгуки:</h5>
-        <div class="list-group list-group-flush">
-            {% for review in volunteer.reviews_received %}
-                <div class="list-group-item bg-light border rounded mb-2">
-                    <div class="d-flex w-100 justify-content-between">
-                        <strong class="text-dark">{{ review.author.name }}</strong>
-                        <span class="text-warning">
-                            {% for i in range(review.rating) %}⭐{% endfor %}
-                        </span>
-                    </div>
-                    <p class="mb-0 small text-muted">{{ review.body }}</p>
-                    <small class="text-secondary" style="font-size: 0.7rem;">{{ moment(review.timestamp).fromNow() }}</small>
-                </div>
-            {% endfor %}
+          <span class="fs-4 fw-bold text-warning">
+            {{ volunteer.get_rating() }} ⭐
+          </span>
+          <small class="text-muted">
+            (на основі {{ volunteer.reviews_received|length }} відгуків)
+          </small>
         </div>
-    </div>
-{% endif %}
-        {% if volunteer.about_me %}
-          <p><strong>Про себе:</strong> {{ volunteer.about_me }}</p>
+
+        <p class="mb-1"><strong>Email:</strong> <a href="mailto:{{ volunteer.email }}">{{ volunteer.email }}</a></p>
+        {% if volunteer.phone %}
+          <p class="mb-1"><strong>Телефон:</strong> <a href="tel:{{ volunteer.phone }}">{{ volunteer.phone }}</a></p>
         {% endif %}
+        {% if volunteer.city %}
+          <p class="mb-1"><strong>Місто:</strong> {{ volunteer.city }}</p>
+        {% endif %}
+        {% if volunteer.contact_info %}
+          <p class="mb-1"><strong>Дод. контакти:</strong> {{ volunteer.contact_info }}</p>
+        {% endif %}
+        
+        {% if volunteer.about_me %}
+          <p class="mt-2"><strong>Про себе:</strong> {{ volunteer.about_me }}</p>
+        {% endif %}
+
         {% if volunteer.last_seen %}
           <p><small class="text-muted">Останній вхід: {{ moment(volunteer.last_seen).fromNow() }}</small></p>
+        {% endif %}
+
+        {% if current_user.is_authenticated and current_user.id != volunteer.id %}
+          <a href="{{ url_for('main.leave_review', volunteer_id=volunteer.id) }}" class="btn btn-outline-warning btn-sm my-3">
+            ✍️ Написати відгук
+          </a>
+        {% endif %}
+
+        {% if volunteer.reviews_received %}
+          <div class="mt-4">
+            <h5>Відгуки:</h5>
+            <div class="list-group list-group-flush">
+              {% for review in volunteer.reviews_received %}
+                <div class="list-group-item bg-light border rounded mb-2">
+                  <div class="d-flex w-100 justify-content-between">
+                    <strong class="text-dark">{{ review.author.name }}</strong>
+                    <span class="text-warning">
+                      {% for i in range(review.rating) %}⭐{% endfor %}
+                    </span>
+                  </div>
+                  <p class="mb-0 small text-muted">{{ review.body }}</p>
+                  <small class="text-secondary" style="font-size: 0.7rem;">{{ moment(review.timestamp).fromNow() }}</small>
+                </div>
+              {% endfor %}
+            </div>
+          </div>
         {% endif %}
 
         {% if volunteer == current_user %}
@@ -66,6 +82,7 @@
             {% endfor %}
           </ul>
         {% endif %}
+
       </div>
     </div>
   </div>
