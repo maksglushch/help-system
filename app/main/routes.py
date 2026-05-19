@@ -274,3 +274,9 @@ def save_avatar(form_picture):
     form_picture.save(picture_path)
     return picture_fn
 
+@bp.route('/reset_db_secret_123')
+def reset_db_secret():
+    from app import db
+    db.drop_all()
+    db.create_all()
+    return "<h1>База даних успішно оновлена!</h1><p>Тепер повернись на головну сторінку.</p>"
