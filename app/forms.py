@@ -65,8 +65,9 @@ class AnnouncementForm(FlaskForm):
     submit = SubmitField('Створити заявку')
 
 class ReviewForm(FlaskForm):
-    rating = SelectField('Оцінка', choices=[(5, '⭐⭐⭐⭐⭐ (5)'), (4, '⭐⭐⭐⭐ (4)'), (3, '⭐⭐⭐ (3)'), (2, '⭐⭐ (2)'), (1, '⭐ (1)')], validators=[DataRequired()])
-    body = TextAreaField('Ваш відгук', validators=[DataRequired(), Length(min=1, max=200)])
+    rating = SelectField('Оцінка', choices=[(5, '⭐⭐⭐⭐⭐ (5)'), (4, '⭐⭐⭐⭐ (4)'), (3, '⭐⭐⭐ (3)'), (2, '⭐⭐ (2)'), (1, '⭐ (1)')], coerce=int, validators=[DataRequired()])
+    # 🔥 Видалили DataRequired(), тепер текст писати не обов'язково!
+    body = TextAreaField('Ваш відгук', validators=[Length(min=0, max=200)])
     submit = SubmitField('Надіслати відгук')
 
 class MessageForm(FlaskForm):

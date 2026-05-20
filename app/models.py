@@ -85,6 +85,9 @@ class User(UserMixin, db.Model):
     def __repr__(self):
         return f'<User {self.name} ({self.role})>'
     
+    def get_review(self):
+        return db.session.scalar(sa.select(Review).where(Review.announcement_id == self.id))
+    
     def get_rating(self):
         # Тут треба імпортувати Review всередині методу, щоб уникнути циклічного імпорту
         # Але оскільки Review визначено нижче, це може бути проблемою.
@@ -137,6 +140,8 @@ class Review(db.Model):
 
     author_id: so.Mapped[int] = so.mapped_column(sa.ForeignKey('users.id'))
     recipient_id: so.Mapped[int] = so.mapped_column(sa.ForeignKey('users.id'))
+    
+    announcement_id: so.Mapped[Optional[int]] = so.mapped_column(sa.ForeignKey('announcement.id'), nullable=True)
 
     author: so.Mapped['User'] = so.relationship(foreign_keys=[author_id], back_populates='reviews_written')
     recipient: so.Mapped['User'] = so.relationship(foreign_keys=[recipient_id], back_populates='reviews_received')

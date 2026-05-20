@@ -315,12 +315,14 @@ def needy_complete_request(announcement_id):
     if ann.volunteer_id:
         form = ReviewForm()
         if form.validate_on_submit():
-            review_text = form.body.data if form.body.data else "Користувач не залишив тексту, лише оцінку."
+            # Якщо текст порожній, ставимо пробіл, щоб не було "None"
+            review_text = form.body.data if form.body.data else ""
             review = Review(
                 body=review_text,
                 rating=int(form.rating.data),
                 author=current_user,
-                recipient=ann.volunteer
+                recipient=ann.volunteer,
+                announcement_id=ann.id # 🔥 ЗАПИСУЄМО, ЯКА ЦЕ ЗАЯВКА
             )
             db.session.add(review)
             flash(f'Заявку успішно виконано! Ви оцінили волонтера на {form.rating.data} зірок.')
