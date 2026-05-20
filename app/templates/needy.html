@@ -2,6 +2,11 @@
 
 {% block content %}
 <div class="container mt-4">
+  <div class="mb-3">
+    <a href="javascript:history.back()" class="text-decoration-none text-muted fw-bold">
+        <i class="fa-solid fa-arrow-left me-1"></i> Повернутися назад
+      </a>
+    </div>
   <div class="card shadow-sm p-4 static-card">
     <div class="row g-3 align-items-start">
       <div class="col-md-3 text-center">
@@ -66,7 +71,10 @@
                     {% endif %}">
                     Статус: 
                     {% if ann.status == 'open' %}Відкрито (пошук волонтера)
-                    {% elif ann.status == 'accepted' %}В роботі (взяв {{ ann.volunteer.name }})
+                    {% elif ann.status == 'accepted' %}В роботі (взяв 
+                    <a href="{{ url_for('main.user_profile', name=ann.volunteer.name) }}" class="text-dark text-decoration-underline">
+                      {{ ann.volunteer.name }}
+                    </a>)
                     {% elif ann.status == 'waiting_review' %}⏳ Очікує вашої оцінки
                     {% elif ann.status == 'completed' %}Виконано
                     {% endif %}

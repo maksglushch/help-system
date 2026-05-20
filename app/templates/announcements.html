@@ -9,7 +9,7 @@
   
   <p class="text-center text-muted">Виберіть заявку поруч із вами.</p>
 
-  <div class="card shadow-sm mb-5">
+  <div class="card shadow-sm mb-5 static-card">
     <div class="card-body p-0">
         <div id="main-map" style="height: 500px; width: 100%; border-radius: 5px;"></div>
     </div>
@@ -34,7 +34,11 @@
           </div>
           <p class="mb-1">{{ a.text }}</p>
           <div class="mt-2">
-            <small class="text-muted">👤 {{ a.author.name }}</small>
+            <small class="text-muted">👤 
+              <a href="{{ url_for('main.user_profile', name=a.author.name) }}" class="text-decoration-underline" style="color: inherit;">
+                {{ a.author.name }}
+              </a>
+            </small>
             
             {% if a.lat and a.lng %}
                 <span class="badge bg-info text-dark ms-2">📍 На мапі</span>

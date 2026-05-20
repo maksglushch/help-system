@@ -50,6 +50,9 @@
                 <div class="card-body">
                     <div id="chat-box" class="chat-container mb-3">
                         {% for msg in messages %}
+                        <a href="{{ url_for('main.user_profile', name=msg.author.name) }}">
+                            <img src="{{ msg.author.avatar(40) }}" class="rounded-circle shadow-sm border" alt="Avatar">
+                        </a>
                             <div class="d-flex {% if msg.sender_id == current_user.id %}justify-content-end{% else %}justify-content-start{% endif %} mb-2">
                                 {% if msg.sender_id != current_user.id %}
                                     <img src="{{ msg.sender.avatar(36) }}" class="rounded-circle me-2" style="width: 36px; height: 36px;">
