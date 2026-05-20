@@ -59,7 +59,11 @@ class EditProfileForm(FlaskForm):
 class AnnouncementForm(FlaskForm):
     title = StringField('Заголовок', validators=[DataRequired(), Length(min=1, max=100)])
     text = TextAreaField('Опис проблеми', validators=[DataRequired(), Length(min=1, max=500)])
-    # Приховані поля для координат (заповнюються через JavaScript)
+    
+    # 🔥 ДОДАЛИ ГАЛОЧКУ:
+    is_urgent = BooleanField('🚨 Це критична ситуація (Потрібна термінова допомога)')
+    
+    # Приховані поля для координат...
     lat = FloatField('Lat', validators=[DataRequired()])
     lng = FloatField('Lng', validators=[DataRequired()])
     submit = SubmitField('Створити заявку')

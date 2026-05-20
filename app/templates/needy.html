@@ -46,7 +46,13 @@
         {% for ann in announcements %}
           <div class="list-group-item">
             <div class="d-flex w-100 justify-content-between">
-              <h5 class="mb-1">{{ ann.title }}</h5>
+              <h5 class="mb-1">
+                {{ ann.title }}
+                {% if ann.is_urgent %}
+                <span class="badge bg-danger ms-2" style="font-size: 0.75rem;">🚨 ТЕРМІНОВО</span>
+                {% endif %}
+              </h5>
+              
               <small class="text-muted">{{ moment(ann.timestamp).format('LLL') }}</small>
             </div>
             <p class="mb-1">{{ ann.text }}</p>

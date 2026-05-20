@@ -107,6 +107,9 @@ class Announcement(db.Model):
     text: so.Mapped[str] = so.mapped_column(sa.String(500))
     timestamp: so.Mapped[datetime] = so.mapped_column(sa.DateTime, default=datetime.utcnow)
     status: so.Mapped[str] = so.mapped_column(sa.String(20), default='open')
+    
+    # 🔥 НОВЕ ПОЛЕ ДЛЯ ПРІОРИТЕТУ:
+    is_urgent: so.Mapped[bool] = so.mapped_column(sa.Boolean, default=False)
 
     lat: so.Mapped[Optional[float]] = so.mapped_column(sa.Float, nullable=True)
     lng: so.Mapped[Optional[float]] = so.mapped_column(sa.Float, nullable=True)

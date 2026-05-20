@@ -20,9 +20,16 @@
   {% if announcements %}
     <div class="list-group">
       {% for a in announcements %}
-        <div class="list-group-item list-group-item-action flex-column align-items-start shadow-sm mb-3 border rounded">
+        <div class="list-group-item list-group-item-action flex-column align-items-start shadow-sm mb-3 rounded {% if a.is_urgent %}border-danger border-2{% else %}border{% endif %}">
           <div class="d-flex w-100 justify-content-between">
-            <h5 class="mb-1 fw-bold">{{ a.title }}</h5>
+            
+            <h5 class="mb-1 fw-bold">
+              {{ a.title }}
+              {% if a.is_urgent %}
+                <span class="badge bg-danger ms-2 text-white" style="font-size: 0.75rem;">🚨 ТЕРМІНОВО</span>
+              {% endif %}
+            </h5>
+            
             <small class="text-muted">{{ moment(a.timestamp).fromNow() }}</small>
           </div>
           <p class="mb-1">{{ a.text }}</p>
@@ -61,7 +68,8 @@
     {% for a in announcements %}
         {% if a.lat and a.lng %}
             L.marker([{{ a.lat }}, {{ a.lng }}]).addTo(map)
-                .bindPopup("<b>{{ a.title }}</b><br>{{ a.text|truncate(50) }}");
+                // Додали помітку "Терміново" в поп-ап на карті, якщо треба
+                .bindPopup("<b>{{ a.title }} {% if a.is_urgent %}🚨{% endif %}</b><br>{{ a.text|truncate(50) }}");
         {% endif %}
     {% endfor %}
 </script>

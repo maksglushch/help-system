@@ -95,8 +95,8 @@ def create_announcement():
     if form.validate_on_submit():
         announcement = Announcement(
             title=form.title.data,
-            # БУЛО: form.description.data -> СТАЛО: form.text.data (як у шаблоні)
             text=form.text.data, 
+            is_urgent=form.is_urgent.data, # 🔥 ЗБЕРІГАЄМО ТЕРМІНОВІСТЬ
             lat=form.lat.data,
             lng=form.lng.data,
             author=current_user,
@@ -129,7 +129,10 @@ def announcements():
             flash(f'Ви взяли заявку "{announcement.title}" в роботу!')
             return redirect(url_for('main.active_requests'))
 
-    query = sa.select(Announcement).where(Announcement.status == 'open').order_by(Announcement.timestamp.desc())
+    query = sa.select(Announcement).where(Announcement.status == 'open').order_by(
+        Announcement.is_urgent.desc(), 
+        Announcement.timestamp.desc()
+    )
     announcements_list = db.session.scalars(query).all()
     
     return render_template('announcements.html', title='Всі заявки', announcements=announcements_list)

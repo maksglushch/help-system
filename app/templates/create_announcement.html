@@ -25,6 +25,11 @@
                             {{ form.text(class="form-control", rows=4) }}
                         </div>
 
+                        <div class="form-check mb-4 mt-3 p-3 bg-light border border-danger rounded">
+                            {{ form.is_urgent(class="form-check-input border-danger ms-1", style="transform: scale(1.5); margin-right: 15px;") }}
+                            {{ form.is_urgent.label(class="form-check-label text-danger fw-bold ms-2") }}
+                        </div>
+
                         <div class="mb-3">
                             <label class="form-label fw-bold">Вкажіть місце (Клікніть по карті) 👇</label>
                             <div id="map" style="height: 400px; width: 100%; border-radius: 5px; border: 2px solid #ddd;"></div>
@@ -47,7 +52,6 @@
 </div>
 
 <script>
-    // Инициализация карты
     var map = L.map('map').setView([50.4501, 30.5234], 13);
 
     L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -63,17 +67,12 @@
         }
         marker = L.marker(e.latlng).addTo(map);
 
-        // 🔥 МАГИЯ ТУТ: Записываем цифры в поля
-        // Мы используем value, потому что поля теперь отрендерены Flask-ом
         var latInput = document.getElementById('lat_field');
         var lngInput = document.getElementById('lng_field');
         
         if (latInput && lngInput) {
             latInput.value = e.latlng.lat;
             lngInput.value = e.latlng.lng;
-            console.log("Координати записані:", e.latlng.lat, e.latlng.lng);
-        } else {
-            alert("ПОМИЛКА: Не знайдено поля форми для координат!");
         }
     }
 
