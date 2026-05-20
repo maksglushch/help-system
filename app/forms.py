@@ -5,6 +5,7 @@ from wtforms.validators import ValidationError, DataRequired, Email, EqualTo, Le
 import sqlalchemy as sa
 from app import db
 from app.models import User
+import re
 
 class LoginForm(FlaskForm):
     name = StringField("Ім'я користувача", validators=[DataRequired()])
@@ -28,6 +29,14 @@ class RegistrationForm(FlaskForm):
         user = db.session.scalar(sa.select(User).where(User.email == email.data))
         if user is not None:
             raise ValidationError('Цей email вже використовується.')
+        
+    def validate_password(self, password):
+        if len(password.data) < 8:
+            raise ValidationError('Пароль має містити щонайменше 8 символів.')
+        if not re.search(r"\d", password.data):
+            raise ValidationError('Пароль має містити хоча б одну цифру.')
+        if not re.search(r"[A-ZА-ЯІЇЄҐ]", password.data):
+            raise ValidationError('Пароль має містити хоча б одну велику літеру.')
 
 class EditProfileForm(FlaskForm):
     name = StringField("Ім'я користувача", validators=[DataRequired()])

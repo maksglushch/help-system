@@ -27,6 +27,9 @@ class User(UserMixin, db.Model):
     name: so.Mapped[str] = so.mapped_column(sa.String(64), index=True, unique=True)
     email: so.Mapped[str] = so.mapped_column(sa.String(120), index=True, unique=True)
     password_hash: so.Mapped[str] = so.mapped_column(sa.String(256))
+
+    failed_login_attempts: so.Mapped[int] = so.mapped_column(sa.Integer, default=0)
+    locked_until: so.Mapped[Optional[datetime]] = so.mapped_column(sa.DateTime, nullable=True)
     
     # 🔥 ОНОВЛЕНІ ДОДАТКОВІ ПОЛЯ
     phone: so.Mapped[Optional[str]] = so.mapped_column(sa.String(20), nullable=True)

@@ -6,6 +6,7 @@ from app import db
 from app.auth import bp
 from app.forms import LoginForm, RegistrationForm
 from app.models import User
+from datetime import datetime, timedelta, timezone
 
 @bp.route('/login', methods=['GET', 'POST'])
 @bp.route('/login/<user_type>', methods=['GET', 'POST'])
@@ -19,9 +20,37 @@ def login(user_type=None):
     if form.validate_on_submit():
         user = db.session.scalar(sa.select(User).where(User.name == form.name.data))
         
-        if user is None or not user.check_password(form.password.data):
-            flash('Невірне ім’я або пароль.')
+        # 1. Якщо такого юзера взагалі немає
+        if user is None:
+            flash('Невірне ім’я або пароль.', 'danger')
             return redirect(url_for('auth.login', user_type=user_type))
+
+        # 2. ПЕРЕВІРКА НА БЛОКУВАННЯ: чи не заблокований він зараз?
+        if user.locked_until and user.locked_until > datetime.now(timezone.utc):
+            time_left = (user.locked_until - datetime.now(timezone.utc)).seconds // 60 + 1
+            flash(f'⛔ Акаунт тимчасово заблоковано. Спробуйте через {time_left} хв.', 'danger')
+            return redirect(url_for('auth.login', user_type=user_type))
+
+        # 3. Якщо пароль неправильний (рахуємо спроби)
+        if not user.check_password(form.password.data):
+            user.failed_login_attempts += 1
+            
+            # Якщо помилився 3 рази - блокуємо на 5 хвилин
+            if user.failed_login_attempts >= 3:
+                user.locked_until = datetime.now(timezone.utc) + timedelta(minutes=5)
+                user.failed_login_attempts = 0 # Скидаємо лічильник для наступного разу
+                db.session.commit()
+                flash('🚨 Забагато невдалих спроб! Акаунт заблоковано на 5 хвилин.', 'danger')
+            else:
+                db.session.commit()
+                flash(f'Невірний пароль. Залишилось спроб: {3 - user.failed_login_attempts}', 'warning')
+                
+            return redirect(url_for('auth.login', user_type=user_type))
+
+        # 4. Якщо пароль ПРАВИЛЬНИЙ - обнуляємо помилки і пускаємо
+        user.failed_login_attempts = 0
+        user.locked_until = None
+        db.session.commit()
 
         login_user(user, remember=form.remember_me.data)
         
@@ -33,7 +62,6 @@ def login(user_type=None):
             next_page = url_for('main.user_profile', name=user.name)
         return redirect(next_page)
 
-    # 🔥 ОСЬ ТУТ БУЛА ПРОБЛЕМА: ми не передавали user_type у шаблон
     return render_template('login.html', title='Вхід', form=form, user_type=user_type)
 
 @bp.route('/logout')
