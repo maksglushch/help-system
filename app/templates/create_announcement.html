@@ -7,7 +7,7 @@
 <div class="container mt-4">
     <div class="row justify-content-center">
         <div class="col-md-8">
-            <div class="card shadow">
+            <div class="card shadow static-card">
                 <div class="card-header bg-primary text-white">
                     <h3 class="mb-0">Створити заявку</h3>
                 </div>
@@ -35,8 +35,7 @@
                             <div id="map" style="height: 400px; width: 100%; border-radius: 5px; border: 2px solid #ddd;"></div>
                         </div>
 
-                        <div class="alert alert-secondary">
-                            <small>Технічні координати (мають заповнитись самі):</small><br>
+                        <div style="display: none;">
                             {{ form.lat(id="lat_field", type="hidden") }}
                             {{ form.lng(id="lng_field", type="hidden") }}
                         </div>
