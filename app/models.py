@@ -129,6 +129,14 @@ class Announcement(db.Model):
     def __repr__(self):
         return f"<Announcement '{self.title}' ({self.status})>"
 
+    # 🔥 ОСЬ ЦЮ ФУНКЦІЮ ТРЕБА БУЛО ДОДАТИ:
+    def get_review(self):
+        # Відкладений імпорт, щоб уникнути циклічної помилки, якщо вона виникне
+        from app.models import Review 
+        import sqlalchemy as sa
+        from app import db
+        return db.session.scalar(sa.select(Review).where(Review.announcement_id == self.id))
+
 
 class Review(db.Model):
     __tablename__ = 'review'
