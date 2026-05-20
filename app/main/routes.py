@@ -8,6 +8,7 @@ from app.forms import EditProfileForm, AnnouncementForm, ReviewForm, MessageForm
 from app.models import User, Announcement, Review, Message
 import os
 import secrets
+import base64
 
 
 # ---------------------------------------------------------
@@ -58,8 +59,9 @@ def edit_profile():
     form = EditProfileForm(current_user.name, current_user.email)
     if form.validate_on_submit():
         if form.avatar.data:
-            picture_file = save_avatar(form.avatar.data)
-            current_user.avatar_file = picture_file
+            # 🔥 ВИКЛИКАЄМО НОВУ ФУНКЦІЮ І ЗБЕРІГАЄМО В НОВЕ ПОЛЕ
+            b64_string = get_b64_avatar(form.avatar.data)
+            current_user.avatar_data = b64_string
             
         current_user.name = form.name.data
         current_user.email = form.email.data
@@ -282,16 +284,12 @@ def get_messages(announcement_id):
         })
     return jsonify(data)
 
-def save_avatar(form_picture):
-    random_hex = secrets.token_hex(8)
-    _, f_ext = os.path.splitext(form_picture.filename)
-    picture_fn = random_hex + f_ext
-    picture_path = os.path.join(current_app.root_path, 'static', 'avatars', picture_fn)
-    
-    # Створюємо папку, якщо її ще немає
-    os.makedirs(os.path.dirname(picture_path), exist_ok=True)
-    form_picture.save(picture_path)
-    return picture_fn
+def get_b64_avatar(form_picture):
+    # Читаємо байти завантаженого файлу
+    image_bytes = form_picture.read()
+    # Конвертуємо байти в текстовий формат Base64
+    b64_encoded = base64.b64encode(image_bytes).decode('utf-8')
+    return b64_encoded
 
 @bp.route('/reset_db_secret_123')
 def reset_db_secret():

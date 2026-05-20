@@ -9,6 +9,7 @@ from hashlib import md5
 from flask import url_for 
 import os
 from flask import current_app, url_for
+import base64
 
 
 # ЗАГРУЗКА ПОЛЬЗОВАТЕЛЯ (Flask-Login)
@@ -32,7 +33,7 @@ class User(UserMixin, db.Model):
     city: so.Mapped[Optional[str]] = so.mapped_column(sa.String(64), nullable=True) # Нове поле
     about_me: so.Mapped[Optional[str]] = so.mapped_column(sa.String(140), nullable=True)
     contact_info: so.Mapped[Optional[str]] = so.mapped_column(sa.String(140), nullable=True)
-    avatar_file: so.Mapped[Optional[str]] = so.mapped_column(sa.String(120), nullable=True) # Нове поле
+    avatar_data: so.Mapped[Optional[str]] = so.mapped_column(sa.Text, nullable=True)
     
     last_seen: so.Mapped[Optional[datetime]] = so.mapped_column(default=lambda: datetime.now(timezone.utc))
 
@@ -64,11 +65,9 @@ class User(UserMixin, db.Model):
         return check_password_hash(self.password_hash, password)
 
     def avatar(self, size):
-        if self.avatar_file:
-            # Перевіряємо, чи файл фізично існує (Render міг його стерти)
-            file_path = os.path.join(current_app.root_path, 'static', 'avatars', self.avatar_file)
-            if os.path.exists(file_path):
-                return url_for('static', filename='avatars/' + self.avatar_file)
+        if self.avatar_data:
+            # Браузер сам зрозуміє, що цей текст — це картинка!
+            return f"data:image/jpeg;base64,{self.avatar_data}"
         
         # Якщо файлу немає, повертаємо стандартний граватар
         digest = md5(self.email.lower().encode('utf-8')).hexdigest()
