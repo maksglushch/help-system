@@ -87,26 +87,38 @@
             font-size: 1rem;
             text-transform: uppercase;
             letter-spacing: 1px;
-            transition: transform 0.3s ease, box-shadow 0.3s ease, background 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+            transition: transform 0.3s ease, box-shadow 0.3s ease, background 0.3s ease;
             box-shadow: 0 4px 6px rgba(50, 50, 93, 0.11), 0 1px 3px rgba(0, 0, 0, 0.08);
-
+            
+            /* 🔥 ПРИБИВАЄМО РОЗМІР ЦВЯХАМИ */
+            border: none !important; 
+            margin: 0 !important;
+            
+            /* 🔥 ЛІКУЄМО СМИКАННЯ ТЕКСТУ ВІД GPU */
+            will-change: transform; 
             backface-visibility: hidden;
             transform: translateZ(0);
         }
+        
         .btn-primary {
             background: var(--primary-gradient);
-            border: 1px solid transparent; /* 🔥 Повернули невидиму рамку, щоб не стрибав розмір */
         }
+        
         .btn-primary:hover {
-            transform: translateY(-2px);
+            /* 🔥 Додаємо translateZ(0) щоб анімація була стабільною */
+            transform: translateY(-2px) translateZ(0); 
             box-shadow: 0 7px 14px rgba(50, 50, 93, 0.1), 0 3px 6px rgba(0, 0, 0, 0.08);
             background: linear-gradient(135deg, #764ba2 0%, #667eea 100%);
-            border: 1px solid transparent;
         }
+        
         .btn-success {
             background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
-            border: 1px solid transparent; /* 🔥 Тут теж */
             color: #0d462b;
+        }
+        
+        .btn-success:hover {
+            transform: translateY(-2px) translateZ(0);
+            box-shadow: 0 7px 14px rgba(50, 50, 93, 0.1), 0 3px 6px rgba(0, 0, 0, 0.08);
         }
         .avatar-small {
             width: 40px;
