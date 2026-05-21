@@ -14,7 +14,7 @@
     {% if requests %}
         <div class="list-group">
             {% for req in requests %}
-                <div class="list-group-item list-group-item-action flex-column align-items-start shadow-sm mb-3 border rounded">
+                <div class="list-group-item flex-column align-items-start shadow-sm mb-3 border rounded static-card">
                     <div class="d-flex w-100 justify-content-between">
                         <h4 class="mb-1 text-dark fw-bold">{{ req.title }}</h4>
                         <small class="text-muted">ID: {{ req.id }}</small>
@@ -30,7 +30,7 @@
                     </div>
 
                     {% if req.lat and req.lng %}
-                        <div class="card mb-3">
+                        <div class="card mb-3 static-card">
                             <div class="card-body p-0">
                                 <div id="map-{{ req.id }}" style="height: 250px; width: 100%;"></div>
                             </div>
