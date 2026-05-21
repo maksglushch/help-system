@@ -50,12 +50,12 @@
                 <div class="card-body">
                     <div id="chat-box" class="chat-container mb-3">
                         {% for msg in messages %}
-                        <a href="{{ url_for('main.user_profile', name=msg.sender.name) }}">
-                            <img src="{{ msg.sender.avatar(40) }}" class="rounded-circle shadow-sm border" alt="Avatar">
-                        </a>
                             <div class="d-flex {% if msg.sender_id == current_user.id %}justify-content-end{% else %}justify-content-start{% endif %} mb-2">
+                                
                                 {% if msg.sender_id != current_user.id %}
-                                    <img src="{{ msg.sender.avatar(36) }}" class="rounded-circle me-2" style="width: 36px; height: 36px;">
+                                    <a href="{{ url_for('main.user_profile', name=msg.sender.name) }}">
+                                        <img src="{{ msg.sender.avatar(36) }}" class="rounded-circle me-2 border" style="width: 36px; height: 36px; object-fit: cover;">
+                                    </a>
                                 {% endif %}
                                 
                                 <div class="message-bubble {% if msg.sender_id == current_user.id %}message-me{% else %}message-other{% endif %}">
@@ -84,12 +84,19 @@
     }
     scrollToBottom();
 
-    // AJAX Polling (URL API не змінюється, бо він не використовує url_for тут)
+    // 🔥 JS знаходить URL профілю співрозмовника
+    var otherProfileUrl = "{% if current_user.id == ann.needy_id %}{{ url_for('main.user_profile', name=ann.volunteer.name) if ann.volunteer else '#' }}{% else %}{{ url_for('main.user_profile', name=ann.author.name) }}{% endif %}";
+
+    // AJAX Polling
     setInterval(function() {
         fetch('/api/messages/{{ ann.id }}')
             .then(response => response.json())
             .then(data => {
                 var chatBox = document.getElementById("chat-box");
+                
+                // Перевіряємо, чи користувач проскролив чат вгору (щоб не кидати його силоміць вниз)
+                var isScrolledToBottom = chatBox.scrollHeight - chatBox.clientHeight <= chatBox.scrollTop + 50;
+                
                 chatBox.innerHTML = ""; 
 
                 data.forEach(msg => {
@@ -97,8 +104,13 @@
                     var bubbleClass = msg.is_me ? "message-me" : "message-other";
                     var avatarHtml = "";
                     
+                    // 🔥 JS тепер малює клікабельну аватарку
                     if (!msg.is_me) {
-                        avatarHtml = `<img src="${msg.avatar}" class="rounded-circle me-2" style="width: 36px; height: 36px;">`;
+                        avatarHtml = `
+                            <a href="${otherProfileUrl}">
+                                <img src="${msg.avatar}" class="rounded-circle me-2 border" style="width: 36px; height: 36px; object-fit: cover;">
+                            </a>
+                        `;
                     }
 
                     var html = `
@@ -112,6 +124,11 @@
                     `;
                     chatBox.innerHTML += html;
                 });
+                
+                // Якщо ми були в самому низу - автоскролимо вниз після оновлення
+                if (isScrolledToBottom) {
+                    scrollToBottom();
+                }
             });
     }, 3000);
 </script>
