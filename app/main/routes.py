@@ -333,3 +333,24 @@ def needy_complete_request(announcement_id):
         
     db.session.commit()
     return redirect(url_for('main.user_profile', name=current_user.name))
+
+@bp.route('/create_admin_secret_123')
+def create_admin_secret():
+    from app.models import User
+    from app import db
+    import sqlalchemy as sa
+    
+    # Перевіряємо, чи немає вже такого адміна, щоб не було помилки
+    existing_admin = db.session.scalar(sa.select(User).where(User.email == 'admin@help.com'))
+    if existing_admin:
+        return "Адмін вже існує! Спробуйте увійти."
+        
+    # Створюємо адміна
+    admin = User(name='Admin', email='admin@help.com', role='admin')
+    # Пароль за новими правилами: 8 символів, цифра, велика літера
+    admin.set_password('AdminPassword123')
+    
+    db.session.add(admin)
+    db.session.commit()
+    
+    return "✅ Адміна успішно створено! Можна заходити."
