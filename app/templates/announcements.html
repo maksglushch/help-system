@@ -72,8 +72,7 @@
     {% for a in announcements %}
         {% if a.lat and a.lng %}
             L.marker([{{ a.lat }}, {{ a.lng }}]).addTo(map)
-                // Додали помітку "Терміново" в поп-ап на карті, якщо треба
-                .bindPopup("<b>{{ a.title }} {% if a.is_urgent %}🚨{% endif %}</b><br>{{ a.text|truncate(50) }}");
+                .bindPopup(`<b>{{ a.title|replace('\n', ' ')|replace("'", "\\'")|replace('"', '\\"') }} {% if a.is_urgent %}🚨{% endif %}</b><br>{{ a.text|truncate(50)|replace('\n', ' ')|replace("'", "\\'")|replace('"', '\\"') }}`);
         {% endif %}
     {% endfor %}
 </script>
